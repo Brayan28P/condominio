@@ -1,0 +1,107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<link rel="icon" type="image/png" href="usuario/images/logo1.png" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no,
+			initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>SAGP</title>
+ <link href="resource/css/style2.css" rel="stylesheet"/>
+</h:head>
+<body style="background: url(../resource/images/fondo2.jpg) no-repeat center center fixed; background-size: cover; 
+		background-position: center center; background-repeat: no-repeat; background-color: #85c1e9;">
+	<div class="container4 h-100;, ui-fluid">
+		<p:growl id="mensajes"  />
+<p:spacer></p:spacer>
+	
+
+			<h:form id="formLogin" styleClass="login" >
+				<p:panelGrid styleClass="panelGridNoBorder w-100" columns="1">
+					<p:row>
+						<p:column>
+						<div align="center">
+							<h3>Administración de Gastos de Condominio</h3>
+						</div>
+						</p:column>
+						</p:row>
+						<p:row>
+						<p:column >
+						<div align="center">
+					
+							<p:graphicImage value="resource/images/utn.jpg"
+								style="width: 100px; height: 100px; "
+								styleClass="rounded mx-auto d-block"></p:graphicImage>
+					</div>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Correo:" />
+							<p:inputText id="correo" accesskey="true" placeholder="example@gmail.com"
+								  required="true"
+								requiredMessage="Ingrese un correo! " maxlength="50"
+								validatorMessage="Ingrese un correo válido ejemplo: bu.dario@gmail.com">
+								<f:validateRegex
+									pattern="^[A-Za-z0-9+_.-]+@(.+)$"></f:validateRegex>
+							</p:inputText>
+							<p:message for="correo"></p:message>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Contraseña:" />
+						</p:column>
+						<p:column>
+							<p:password id="pass" required="true" placeholder="Contraseña"
+								requiredMessage="Ingrese una contraseña"
+								  maxlength="20" />
+						</p:column>
+						<p:column>
+							<p:message for="pass"></p:message>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column >
+						<div align="center">
+							<p:commandButton value="INGRESAR" id="ajax"
+								  style="width:188px"
+								styleClass="btn btn-primary px-4" validateClient="true" update="formLogin"/>
+					
+					</div>
+						</p:column>
+						</p:row>
+								<p:row>
+						<p:column >
+						<div align="left">
+						
+								</div>                    	
+							<div >
+							<span><a href="registrarse.xhtml"><u>Registrarse </u></a></span>  
+							
+						
+							</div>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+			</h:form>
+
+
+		<p:outputLabel></p:outputLabel>
+		<p:growl>
+			<p:autoUpdate />
+		</p:growl>
+	
+	</div>
+</body>
+
+</html>
