@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<ui:insert name="head" />
+	<f:facet name="first">
+		<title>SAGC</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport"
+			content="width=device-width, user-scalable=no,
+			initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ 
+	</f:facet>
+	<f:facet name="middle">
+		<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+		<h:outputStylesheet name="css/styles.css" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputScript name="bootstrap/js/bootstrap.js" />
+		<h:outputScript name="js/styles.js" />
+		<h:outputScript name="js/validator.js" />
+	</f:facet>
+</h:head> 
+
+<body  > 
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+	<ui:insert name="content">
+	
+	</ui:insert>
+	
+	<ui:insert name="footer">
+		<ui:include src="footer.xhtml" />
+	</ui:insert>
+</body> 
+</html>
