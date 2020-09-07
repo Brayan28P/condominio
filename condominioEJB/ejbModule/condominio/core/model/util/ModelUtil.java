@@ -7,6 +7,13 @@ public class ModelUtil {
 			return true;
 		return false;
 	}
+	public static boolean isEmptyNumber(long numeroID){
+		if(numeroID==0)
+			return true;
+		return false;
+	}
+
+	
 	
 }
 

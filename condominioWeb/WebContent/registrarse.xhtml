@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+	<link rel="icon" type="image/png" href="usuario/images/logo1.png" />
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+
+
+	<title>SAGC</title>
+	<f:facet name="middle">
+ <link href="resource/css/style2.css" rel="stylesheet"/>
+	</f:facet>
+<style type="text/css">
+    /** Demo **/
+    .ui-outputlabel {
+        font-weight: bold;
+    }
+ 
+    .ui-orderlist .ui-orderlist-list {
+        height: auto;
+    }
+</style>
+</h:head>
+<body style="background: url(../resource/images/fondo2.jpg) no-repeat center center fixed; background-size: cover; 
+		background-position: center center; background-repeat: no-repeat; background-color: #85c1e9;">
+
+	<h:form id="formLogin" styleClass="login">
+		<div class="ui-fluid" align="center">
+			
+		<p:panelGrid columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="showcase-text-align-center" contentStyleClass="ui-fluid">
+<p:graphicImage value="resource/images/utn.jpg"
+								style="width: 100px; height: 100px; "
+								styleClass="rounded mx-auto d-block"></p:graphicImage>
+			
+				  <p:row>
+    <p:column>
+						<p:outputLabel for="nombre" value="Nombres:"></p:outputLabel>
+						<p:inputText id="nombre"
+							validatorMessage="Nombre: ingrese solo letras!"
+							 required="true"
+							requiredMessage="Ingrese sus nombres" maxlength="100">
+							<f:validateRegex
+								pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,100}"></f:validateRegex>
+						</p:inputText>
+						<p:message for="nombre"></p:message>
+						</p:column>
+						</p:row>
+					
+				<p:row>
+					<p:column >
+						<p:outputLabel for="apellido" value="Apellidos:"></p:outputLabel>
+					
+						<p:inputText id="apellido"
+							validatorMessage="Apellido: ingrese solo letras!"
+							  required="true"
+							requiredMessage="Ingrese sus apellidos" maxlength="100">
+							<f:validateRegex
+								pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,100}"></f:validateRegex>
+						</p:inputText>
+					
+
+						<p:message for="apellido"></p:message>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel for="correo" value="Correo:" />
+					
+						<p:inputText id="correo" accesskey="true"
+						 required="true"
+							requiredMessage="Ingrese un correo " maxlength="50"
+							validatorMessage="Ingrese un correo válido ejemplo: buitrongonzaga@gmail.com">
+							<f:validateRegex
+								pattern="(^[^@]+@[^@]+\.[a-zA-Z]{2,}$)"></f:validateRegex>
+						</p:inputText>
+					
+						<p:message for="correo"></p:message>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel for="passU" value="Contraseña:" />
+				
+						<p:password id="passU"
+						  feedback="true"
+							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula . mayúscula y un número"
+							required="true" requiredMessage="Ingrese una contraseña segura"
+							maxlength="20" promptLabel="Ingrese una contraseña segura!"
+							weakLabel="Bajo" goodLabel="Media" strongLabel="Alta">
+							<f:validateRegex
+								pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}"></f:validateRegex>
+						</p:password>
+				
+						<p:message for="passU"></p:message>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<div id="contenido" class="container-fluid col-lg-11">
+							<p:commandButton ajax="true" styleClass="button buttonBlue"
+								value="Registrarse"
+								 
+								validateClient="true">
+							</p:commandButton>
+						</div>
+					</p:column>
+						</p:row>
+				<p:row>
+					<p:column>
+						<div id="contenido" class="container-fluid col-lg-11">
+							
+						</div>
+					</p:column>
+				</p:row>
+						<p:row>
+						<p:column >
+						<div align="left">
+							<span><a href="login.xhtml">
+							<u>REGRESAR</u></a></span>
+							</div>
+						</p:column>
+					</p:row>
+			</p:panelGrid>
+
+
+		</div>
+
+
+	</h:form>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<p:messages>
+		<p:autoUpdate />
+	</p:messages>
+
+</body>
+</html>

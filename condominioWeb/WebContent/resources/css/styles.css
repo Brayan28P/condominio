@@ -1,0 +1,423 @@
+html{
+	min-height: 100%;
+	position: relative;
+}
+
+body{
+	margin:0px;
+	height: 100%;
+}
+
+
+/*--------------------------------------------------------------
+# HEADER
+--------------------------------------------------------------*/
+header {
+	padding: 120px 0 120px;
+}
+
+@media ( min-width : 992px) {
+	header {
+		padding: 120px 0 120px;
+	}
+}
+
+/*--------------------------------------------------------------*/
+#header {
+	padding: 30px 0;
+	height: 92px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	transition: all 0.5s;
+	z-index: 997;
+}
+
+#header.header-scrolled {
+  	background: rgba(0, 0, 0, 0.9);
+ 	padding: 20px 0;
+ 	height: 72px;
+ 	transition: all 0.5s;
+}
+
+#header #logo {
+	float: left;
+}
+
+#header #logo h1 {
+	font-size: 34px;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 700;
+	letter-spacing: 3px;
+}
+
+#header #logo h1 a,
+#header #logo h1 a:hover {
+	color: #fff;
+	padding-left: 10px;
+	border-left: 4px solid #00aae4;
+}
+
+#header #logo img {
+	padding: 0;
+	margin: 0;
+}
+
+
+
+/*--------------------------------------------------------------
+# SECTION
+--------------------------------------------------------------*/
+section {
+	padding: 100px 0;
+}
+
+
+
+/*--------------------------------------------------------------
+# FOOTER
+--------------------------------------------------------------*/
+footer {
+	background-color: #F2F2F2;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+.footer-fix {
+	height: 150px;
+}
+
+
+
+/*--------------------------------------------------------------
+# AUDITORIA
+--------------------------------------------------------------*/
+ .red1{
+	background-color: #fb775d !important;
+    background-image: none !important;
+    color: #000000 !important;
+    }
+.yellow1{
+    background-color: #f9f939 !important;
+    background-image: none !important;
+    color: #000000 !important;
+}
+.white1{
+    background-color: #fefcfc !important;
+	background-image: none !important;
+	color: #000000 !important;
+    }
+
+
+/*--------------------------------------------------------------
+# PLANIFICACION
+--------------------------------------------------------------*/
+.ui-steps .ui-steps-item {
+	width: 25%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+	overflow: visible;
+	border: 1px solid #c8c8c8;
+	display: block;
+	background-color: #FFFFFF;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-number
+	{
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	position: relative;
+	top: -3px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-title {
+	margin-top: -6px;
+}
+
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-menuitem-link .ui-steps-title
+	{
+	color: #555;
+}
+
+
+/*--------------------------------------------------------------
+# ACCESOS
+--------------------------------------------------------------*/
+.delay .progressBarDelay .ui-progressbar .ui-progressbar-value {
+	background: red
+}
+
+.myProgress {
+	width: 100%;
+	background-color: silver;
+}
+
+.myBarBlue {
+	height: 20px;
+	background-color: #099910;
+}
+
+.myBarYellow {
+	height: 20px;
+	background-color: orange ;
+}
+
+.myBarRed {
+	height: 20px;
+	background-color: red !important;
+}
+
+
+
+/*--------------------------------------------------------------
+# OTRO
+--------------------------------------------------------------*/
+.carousel-container {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+
+.left{
+	float: left;
+	background: #337ab7;
+	display: inline-block;
+	white-space: nowrap;
+	width: 50px;
+    transition: width .3s;
+}
+
+.left:hover {
+    width: 250px;
+}
+    
+.left .fas {
+	margin: 15px;
+    width: 20px;
+    color: #fff;
+    font-size: 20px;
+    vertical-align: middle !important;
+}
+
+.item {
+	height: 50px;
+    overflow: hidden;
+    color: #fff;
+}
+    
+.item:hover {
+	background-color: black;
+} 
+
+
+
+.panelGridNoBorder.ui-panelgrid>*>td, 
+.panelGridNoBorder.ui-panelgrid
+.ui-panelgrid-cell{
+	border: none;
+	background-color: transparent;
+	padding: 1px  1px;
+}
+
+.noBorderPanelGrid.ui-panelgrid .ui-panelgrid-cell {
+	border: none;
+	background-color: transparent;
+	
+}
+
+.ui-panelgrid .ui-grid-responsive .ui-panelgrid-cell {
+	text-align: left;
+}
+
+.navBorder{
+	padding: 2px 15px;	
+}
+
+.labelBorder{
+	padding: 0px 0px 0px;
+	margin: 0px 0px 0px;
+}
+
+.ui-datagrid-no-border .ui-datagrid-content {
+	border: none;
+}
+
+.fieldset { 
+	display: block;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-top: 0.35em;
+	padding-bottom: 0.625em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	border: 2px groove (internal value);
+}
+
+.fieldset.ui-fieldset 
+.fieldset.ui-fieldset-legend {
+     padding: 50px 50px !important;
+   }
+
+.datatableNoBorder {
+	border: none;
+	background-color: blue
+}
+
+.ui-panel-content{
+	background:red;
+}
+
+.user-display {
+    display: block;
+    float: right;
+    position: relative;
+    text-align: right;
+}
+
+
+.layout-sidebar {
+    overflow: auto;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 1000;
+}
+
+.letra .ui-menuitem-text{
+	font-size: 16px;
+}
+
+.letramenu .ui-selectonemenu-label{
+	font-size: 16px;
+}
+
+.member {
+  text-align: center;
+  margin-bottom: 20px;
+  background: #000;
+  position: relative;
+}
+
+.member .member-info {
+  opacity: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: 0.2s;
+}
+
+.member .member-info-content {
+  margin-top: -50px;
+  transition: margin 0.2s;
+}
+
+.menu .ui-selectonemenu-label { 
+    background-color: #E4E5E5 ; 
+}
+
+.menu .ui-selectonemenu-trigger { 
+    background-color: #E4E5E5 !important;
+}
+
+
+
+/*--------------------------------------------------------------
+# Degradado
+--------------------------------------------------------------*/
+.degradado {
+	background: -webkit-linear-gradient(left,  #b3afaf,  #4f84ee, #151290); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, #b3afaf,  #4f84ee, #151290); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #b3afaf,  #4f84ee, #151290); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #b3afaf,  #4f84ee, #151290); /* Standard syntax */
+}
+
+.grad {
+  background-image: linear-gradient(to bottom right, red, yellow);
+}
+
+.degradado-gradiente {
+	background: -webkit-radial-gradient(red, green, blue); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient(red, green, blue); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient(red, green, blue); /* For Firefox 3.6 to 15 */
+	background: radial-gradient(red, green, blue); /* Standard syntax */
+}
+
+/*--------------------------------------------------------------
+# Botones colores
+--------------------------------------------------------------*/
+
+.cancelar{
+	background-color: #e70f0f !important;
+	border-color: #e70f0f !important;
+}
+
+.ingresar{
+	background-color: green !important;
+	border-color: green !important;
+}
+
+.actualizar{
+	background-color: green !important;
+	border-color: green !important;
+}
+
+.boton-tam{
+	height: 35px !important;
+	width: 35px !important;
+}
+.ui-outputlabel{
+font-weight:bold;
+}
