@@ -1,11 +1,13 @@
 package condominio.modulos.login.view.controller;
 
-import javax.faces.view.ViewScoped;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class BeanLogin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,5 +15,9 @@ public class BeanLogin implements Serializable {
 	public BeanLogin() {
 		
 	}
-
+	public String  actionCerrarSesion() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();		
+		return "/login?faces-redirect=true";
+	}
+	
 }
