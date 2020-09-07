@@ -2,6 +2,8 @@ package condominio.modulos.login.model;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Session Bean implementation class ManagerLogin
@@ -9,10 +11,8 @@ import javax.ejb.Stateless;
 @Stateless
 @LocalBean
 public class ManagerLogin {
-
-    /**
-     * Default constructor. 
-     */
+	@PersistenceContext
+	private EntityManager em;
     public ManagerLogin() {
         // TODO Auto-generated constructor stub
     }
