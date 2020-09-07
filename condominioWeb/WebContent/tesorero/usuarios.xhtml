@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template="/WEB-INF/template/template_general.xhtml">
+	
+	<ui:define name="head">
+		<link rel="icon" type="image/png" href="../resources/images/logoTitle.png" />
+	</ui:define>
+	
+	<ui:define name="content">
+	
+	<div id="menu" style="margin-top: 66px;">
+		<h:form>
+			<nav class="navbar navbar-expand-lg navbar-dark fixed-top navBorder"
+				style="background-color: #E4E5E5; margin-top:66px; z-index:1000"> 
+					
+				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">	
+					<p:menuitem title="Ingresar nuevo Usuario " icon="fa fa-plus" style="font-size: 16px;" value="Nuevo usuario"
+							   />
+				</p:menubar>
+			</nav>
+		</h:form>
+	</div>
+	
+	<div id="migajas" class="container-fluid col-lg-12" style="margin-top: 105px;">
+	     <nav class="navbar navbar-expand-lg fixed-top labelBorder" style="margin-top:105px; z-index:100"> 
+			    <ol class="breadcrumb w-100" style="background-color: white">
+			      <li class="breadcrumb-item" style="font-size: 14px;"><a href="#"><i class="fa fa-home"/>&nbsp;Inicio</a></li>
+	      <li class="breadcrumb-item active" style="font-size: 14px;">Usuario</li>
+			    </ol>
+		    </nav>
+	  </div>
+	  
+	
+	<div id="mensajes" class="container-fluid col-lg-12" style="margin-top: 150px;">
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<p:growl>
+			<p:autoUpdate />
+		</p:growl>
+	</div>
+	<div class="container-fluid col-lg-12" >
+	
+<h:form>
+    <div class="ui-fluid">
+      <p:dataTable var="car" value="#{beanUsuario.listaUsuarios}" reflow="true" style="margin-top:20px">
+            <f:facet name="header">
+              LISTA DE USUARIOS
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{car.idusuario}" />
+            </p:column>
+ 
+            <p:column headerText="Year">
+                <h:outputText value="#{car.nombres}" />
+            </p:column>
+ 
+            <p:column headerText="Brand">
+                <h:outputText value="#{car.apellidos}" />
+            </p:column>
+ 
+            <p:column headerText="Color">
+                <h:outputText value="#{car.nombres}" />
+            </p:column>
+        </p:dataTable>
+ 
+         
+ 
+       
+  
+    </div>
+</h:form>
+
+
+	</div>
+	
+	</ui:define>
+
+</ui:composition>
+
+</html>
