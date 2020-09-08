@@ -16,7 +16,7 @@ public class Gasto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="GASTO_IDGASTOC_GENERATOR", sequenceName="SEQ_GASTO")
+	@SequenceGenerator(name="GASTO_IDGASTOC_GENERATOR", sequenceName="SEQ_GASTO",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GASTO_IDGASTOC_GENERATOR")
 	private long idgastoc;
 

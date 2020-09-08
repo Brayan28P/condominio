@@ -16,7 +16,7 @@ public class TipoPago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPO_PAGO_IDPAGO_GENERATOR", sequenceName="SEQ_TIPO_PAGO")
+	@SequenceGenerator(name="TIPO_PAGO_IDPAGO_GENERATOR", sequenceName="SEQ_TIPO_PAGO",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPO_PAGO_IDPAGO_GENERATOR")
 	private long idpago;
 

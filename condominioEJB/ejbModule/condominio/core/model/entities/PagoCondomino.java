@@ -17,7 +17,7 @@ public class PagoCondomino implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PAGO_CONDOMINO_IDPAGOC_GENERATOR", sequenceName="SEQ_PAGO_CONDOMINO")
+	@SequenceGenerator(name="PAGO_CONDOMINO_IDPAGOC_GENERATOR", sequenceName="SEQ_PAGO_CONDOMINO",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PAGO_CONDOMINO_IDPAGOC_GENERATOR")
 	private long idpagoc;
 

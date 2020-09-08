@@ -15,7 +15,7 @@ public class Rol implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ROL_IDROL_GENERATOR", sequenceName="SEQ_ROL")
+	@SequenceGenerator(name="ROL_IDROL_GENERATOR", sequenceName="SEQ_ROL",allocationSize =1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ROL_IDROL_GENERATOR")
 	private long idrol;
 

@@ -16,7 +16,7 @@ public class TipoGasto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPO_GASTO_IDGASTO_GENERATOR", sequenceName="SEQ_TIPO_GASTO")
+	@SequenceGenerator(name="TIPO_GASTO_IDGASTO_GENERATOR", sequenceName="SEQ_TIPO_GASTO",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPO_GASTO_IDGASTO_GENERATOR")
 	private long idgasto;
 
