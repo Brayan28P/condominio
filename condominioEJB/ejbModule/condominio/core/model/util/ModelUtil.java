@@ -1,4 +1,4 @@
-package condominio.core.model.util;
+package condominio.core.model.util; 
 
 public class ModelUtil {
 //
@@ -13,7 +13,7 @@ public class ModelUtil {
 		return false;
 	}
 
-	
+
 	
 }
 
