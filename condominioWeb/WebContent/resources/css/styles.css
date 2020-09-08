@@ -378,10 +378,10 @@ footer {
 # Degradado
 --------------------------------------------------------------*/
 .degradado {
-	background: -webkit-linear-gradient(left,  #b3afaf,  #4f84ee, #151290); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(right, #b3afaf,  #4f84ee, #151290); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(right, #b3afaf,  #4f84ee, #151290); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to right, #b3afaf,  #4f84ee, #151290); /* Standard syntax */
+	background: -webkit-linear-gradient(left,  #b3afaf,  #4f84ee, #485e5f); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, #b3afaf,  #4f84ee, #485e5f); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #b3afaf,  #4f84ee, #485e5f); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #b3afaf,  #4f84ee, #485e5f); /* Standard syntax */
 }
 
 .grad {
