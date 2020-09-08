@@ -31,12 +31,11 @@
 
 	<h:form id="formLogin" styleClass="login">
 		<div class="ui-fluid" align="center">
-			
+			  <p:panel id="toggleable" header="Registro de Usuarios"   toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+ 
 		<p:panelGrid columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
 				styleClass="showcase-text-align-center" contentStyleClass="ui-fluid">
-<p:graphicImage value="resource/images/utn.jpg"
-								style="width: 100px; height: 100px; "
-								styleClass="rounded mx-auto d-block"></p:graphicImage>
+ 
 			
 				  <p:row>
     <p:column>
@@ -110,25 +109,15 @@
 								 
 								validateClient="true">
 							</p:commandButton>
-						</div>
-					</p:column>
-						</p:row>
-				<p:row>
-					<p:column>
-						<div id="contenido" class="container-fluid col-lg-11">
-							
-						</div>
-					</p:column>
-				</p:row>
-						<p:row>
-						<p:column >
+						</div> 
 						<div align="left">
 							<span><a href="login.xhtml">
-							<u>REGRESAR</u></a></span>
+							<u>Inicio</u></a></span>
 							</div>
-						</p:column>
-					</p:row>
+					</p:column>
+						</p:row> 	
 			</p:panelGrid>
+			</p:panel>
 
 
 		</div>
