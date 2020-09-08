@@ -47,9 +47,9 @@
 						<p:column>
 							<h:outputLabel value="Correo:" />
 							<p:inputText id="correo" accesskey="true" placeholder="example@gmail.com"
-								  required="true"
-								requiredMessage="Ingrese un correo! " maxlength="50"
-								validatorMessage="Ingrese un correo válido ejemplo: bu.dario@gmail.com">
+								  required="true" value="#{beanLogin.correo}"
+								requiredMessage="Ingrese un correo! " maxlength="100"
+								validatorMessage="Ingrese un correo válido ejemplo: Brayan28P@gmail.com">
 								<f:validateRegex
 									pattern="^[A-Za-z0-9+_.-]+@(.+)$"></f:validateRegex>
 							</p:inputText>
@@ -62,7 +62,7 @@
 						</p:column>
 						<p:column>
 							<p:password id="pass" required="true" placeholder="Contraseña"
-								requiredMessage="Ingrese una contraseña"
+								requiredMessage="Ingrese una contraseña" value="#{beanLogin.contrasenia}"
 								  maxlength="20" />
 						</p:column>
 						<p:column>
@@ -72,7 +72,7 @@
 					<p:row>
 						<p:column >
 						<div align="center">
-							<p:commandButton value="INGRESAR" id="ajax"
+							<p:commandButton value="INGRESAR" id="ajax" action="#{beanLogin.actionLogin()}"
 								  style="width:188px"
 								styleClass="btn btn-primary px-4" validateClient="true" update="formLogin"/>
 					
