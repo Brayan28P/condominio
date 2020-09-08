@@ -49,17 +49,40 @@ public class ManagerUsuario {
   Método para registrar los roles
     */
     public void ingresarRol(Rol r) throws Exception {
-      	if (r==null) {
-    		throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+      	if (r!=null) {
+      		Rol rol=new Rol();
+			rol=r;
+			em.persist(rol);
+    	
 		}else {
-			em.persist(r);
+			throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+		}
+    }
+    /*
+  Método para registrar los roles
+    */
+    public void ingresarUsuario(Usuario u, long id_rol_fk) throws Exception {
+      	if (u==null) {
+
+      		throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+		}else {
+			if (ModelUtil.isEmptyNumber(id_rol_fk)) {
+		   		throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+			}else {
+				Rol r=findRolnById(id_rol_fk);
+      		Usuario usuario=new Usuario();
+			usuario=u;
+			usuario.setRol(r);
+ 
+			em.persist(usuario);
+			}
 		}
     }
     /*
     Método para encontrar un rol por el ID  o PK 
     */
-    public Rol findRolnById(int idRol) {
-    	Rol rol= em.find(Rol.class, idRol);
+    public Rol findRolnById(long idrol) {
+    	Rol rol= em.find(Rol.class, idrol);
 		return rol;
 	}
     /*
@@ -83,9 +106,21 @@ public class ManagerUsuario {
     */
 	@SuppressWarnings("unchecked")
 	public List<Usuario> findAllUsuarios() {
-		Query q = em.createQuery("SELECT u FROM Usuario u order by u.idUsuario asc", Usuario.class);
+		Query q = em.createQuery("SELECT u FROM Usuario u ", Usuario.class);
 		List<Usuario> listaUsuarios= q.getResultList();
 		return listaUsuarios;
+	}
+    /*
+    Método para editar Roles
+    */
+	 
+	public void  editarRol(Rol r) throws Exception {
+if (r==null) {
+	throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+}else {
+	em.merge(r);
+}
+
 	}
     
     
