@@ -22,7 +22,8 @@
 				style="background-color: #E4E5E5; margin-top:66px; z-index:1000"> 
 					
 				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">	
-					<p:menuitem title="Ingresar nuevo Usuario " icon="fa fa-plus" style="font-size: 16px;" value="Nuevo usuario"
+					<p:menuitem title="Ingresar nuevo Usuario " icon="fa fa-plus"  onclick="PF('nuevoUsuario').show();"
+					 style="font-size: 16px;" value="Nuevo usuario"
 							   />
 				</p:menubar>
 			</nav>
@@ -32,7 +33,7 @@
 	<div id="migajas" class="container-fluid col-lg-12" style="margin-top: 105px;">
 	     <nav class="navbar navbar-expand-lg fixed-top labelBorder" style="margin-top:105px; z-index:100"> 
 			    <ol class="breadcrumb w-100" style="background-color: white">
-			      <li class="breadcrumb-item" style="font-size: 14px;"><a href="#"><i class="fa fa-home"/>&nbsp;Inicio</a></li>
+			      <li class="breadcrumb-item" style="font-size: 14px;"><a href="menu.xhtml"><i class="fa fa-home"/>&nbsp;Inicio</a></li>
 	      <li class="breadcrumb-item active" style="font-size: 14px;">Usuario</li>
 			    </ol>
 		    </nav>
@@ -51,24 +52,37 @@
 	
 <h:form>
     <div class="ui-fluid">
-      <p:dataTable var="car" value="#{beanUsuario.listaUsuarios}" reflow="true" style="margin-top:20px">
+      <p:dataTable var="u" value="#{beanUsuario.listaUsuarios}" reflow="true" style="margin-top:20px">
             <f:facet name="header">
               LISTA DE USUARIOS
             </f:facet>
             <p:column headerText="Id">
-                <h:outputText value="#{car.idusuario}" />
+                <h:outputText value="#{u.idusuario}" />
             </p:column>
  
-            <p:column headerText="Year">
-                <h:outputText value="#{car.nombres}" />
+            <p:column headerText="Nombres">
+                <h:outputText value="#{u.nombres}" />
             </p:column>
  
-            <p:column headerText="Brand">
-                <h:outputText value="#{car.apellidos}" />
+            <p:column headerText="Apellidos">
+                <h:outputText value="#{u.apellidos}" />
             </p:column>
  
-            <p:column headerText="Color">
-                <h:outputText value="#{car.nombres}" />
+            <p:column headerText="Correo">
+                <h:outputText value="#{u.email}" />
+            </p:column>
+            <p:column headerText="OPCIONES">
+               <p:commandButton icon="fa fa-pencil" actionListener="#{beanUsuario.actionListenerCargarRol(r)}"
+							update="form10"	onclick="PF('editarUsuario').show();" title="Editar" 
+								></p:commandButton>
+								
+							<p:commandButton update="@form"
+							 
+								style="border:#FC1F0D;background-color:#FC1F0D" title="Eliminar"
+								icon="fa fa-times">
+								<p:confirm header="Confirmación" message="Desea eliminar?"
+									icon="fa fa-times" />
+							</p:commandButton>
             </p:column>
         </p:dataTable>
  
@@ -79,9 +93,101 @@
     </div>
 </h:form>
 
+<p:dialog header="Ingresar nuevo Rol" widgetVar="nuevoUsuario"
+		id="nuevoUsuario" modal="true" height="450" resizable="true"
+		responsive="true" minimizable="true" maximizable="true"
+		appendTo="@(body)">
+		<h:form id="form1">
+			<div class="ui-fluid">
+				<p:panelGrid columns="1" layout="grid">
 
+					<p:outputLabel value="Nombres:" />
+					<p:inputText
+						value="#{beanUsuario.usuario.nombres}" required="true"
+						requiredMessage="Ingrese los nombres" maxlength="100">
+					</p:inputText>
+					<p:outputLabel value="Apellidos:" />
+					<p:inputText
+						value="#{beanUsuario.usuario.apellidos}" required="true"
+						requiredMessage="Ingrese los apellidos" maxlength="100">
+					</p:inputText>
+					<p:outputLabel value="correo:" />
+					<p:inputText
+						value="#{beanUsuario.usuario.email}" required="true"
+						requiredMessage="Ingrese los nombres" maxlength="100">
+					</p:inputText>
+					<p:outputLabel value="Seleccione el rol: " />
+					<p:selectOneMenu id="onerol" autoWidth="100%" required="true"
+						requiredMessage="Elija un rol"
+						value="#{beanUsuario.idrolfk}" effect="fade" var="ro"
+						filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Select One" noSelectionOption="true" />
+						<f:selectItems value="#{beanUsuario.listaRoles}" var="r"
+							itemLabel="#{r.nombre}"
+							itemValue="#{r.idrol}" />
+
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid">
+					<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+						style="width:100%"
+						actionListener="#{beanUsuario.actionListenerIngresarUsuario()}"
+						oncomplete="nuevoUsuario" update="@form" ajax="false">
+					</p:commandButton>
+					<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
+						dismiss="modal" />
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</p:dialog>
 	</div>
-	
+	<p:dialog header="Editar Usuario" widgetVar="editarUsuario"
+		id="editarUsuario" modal="true" height="230" resizable="true"
+		responsive="true" minimizable="true" maximizable="true"
+		appendTo="@(body)">
+		<h:form id="form10">
+			<div class="ui-fluid">
+				<p:panelGrid columns="1" layout="grid">
+<p:outputLabel value="ID:" />
+					<p:inputText
+						value="#{beanUsuario.editarUsuario.idusuario}" required="true" disabled="true">
+					</p:inputText>
+					<p:outputLabel value="Nombres:" />
+					<p:inputText
+						value="#{beanUsuario.editarUsuario.nombres}" required="true"
+						requiredMessage="Ingrese los nombres " maxlength="100">
+					</p:inputText>
+					<p:outputLabel value="Apellidos:" />
+					<p:inputText
+						value="#{beanUsuario.editarUsuario.apellidos}" required="true"
+						requiredMessage="Ingrese los apellidos" maxlength="100">
+					</p:inputText>
+					<p:outputLabel value="Correo:" />
+					<p:inputText
+						value="#{beanUsuario.editarUsuario.email}" required="true"
+						requiredMessage="Ingrese el email" maxlength="100">
+					</p:inputText>
+					
+
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid">
+					<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+						style="width:100%"
+						
+						oncomplete="nuevoUsuario" update="@form" ajax="false">
+					</p:commandButton>
+					<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
+						dismiss="modal" />
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</p:dialog>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+	</p:confirmDialog>
 	</ui:define>
 
 </ui:composition>

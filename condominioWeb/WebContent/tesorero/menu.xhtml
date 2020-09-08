@@ -24,9 +24,9 @@
 				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">	
 					<p:menuitem title="Bienvenido " icon="fa fa-user" style="font-size: 16px;" value="Bienvenido"
 							   />
-							   <p:menuitem title="Usuarios " icon="fa fa-users" style="font-size: 16px;" value="Usuarios" 
+							   <p:menuitem title="Usuarios " action="#{beanUsuario.actionRedireccionarUsuarios()}" icon="fa fa-users" style="font-size: 16px;" value="Usuarios" 
 							   />
-							   <p:menuitem title="Roles " icon="fa fa-globe" style="font-size: 16px;" value="Roles"
+							   <p:menuitem title="Roles " icon="fa fa-globe" action="#{beanUsuario.actionRedireccionarRoles()}" style="font-size: 16px;" value="Roles"
 							   />
 				</p:menubar>
 			</nav>
@@ -52,40 +52,7 @@
 	</div>
 	
  	
-	<div class="container-fluid col-lg-12" >
 	
-<h:form>
-    <div class="ui-fluid">
-      <p:dataTable var="car" value="#{beanUsuario.listaUsuarios}" reflow="true" style="margin-top:20px">
-            <f:facet name="header">
-              LISTA DE USUARIOS
-            </f:facet>
-            <p:column headerText="Id">
-                <h:outputText value="#{car.idusuario}" />
-            </p:column>
- 
-            <p:column headerText="Year">
-                <h:outputText value="#{car.nombres}" />
-            </p:column>
- 
-            <p:column headerText="Brand">
-                <h:outputText value="#{car.apellidos}" />
-            </p:column>
- 
-            <p:column headerText="Color">
-                <h:outputText value="#{car.nombres}" />
-            </p:column>
-        </p:dataTable>
- 
-         
- 
-       
-  
-    </div>
-</h:form>
-
-
-	</div>
 	
 	</ui:define>
 
