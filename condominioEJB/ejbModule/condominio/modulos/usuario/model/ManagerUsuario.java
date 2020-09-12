@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.Usuario;
 import condominio.core.model.util.ModelUtil;
+import condominio.modulos.login.model.LoginDto;
 
 /**
  * Session Bean implementation class ManagerUsuario
@@ -27,26 +28,41 @@ public class ManagerUsuario {
     }
     
     /*
-     MÈtodo para que se registren los usuarios manualmente
+     Metodo para que se registren los usuarios manualmente
      */
-    public void registrarUsuario(Usuario u, long idRolfk) throws Exception {
-    	if (u==null) {
-    		throw new Exception("El objeto usuario no ha sido cargado correctamente.!");
-		}else {
-			if (ModelUtil.isEmptyNumber(idRolfk)) {
-				throw new Exception("La clave for·nea de roles no ha sido correctamente cargada.!");	
-			}else {
-				Rol r=new Rol();
+    public LoginDto registrarUsuario(Usuario u) throws Exception {
+    	if (ModelUtil.isEmpty(u.getNombres())) {
+    		throw new Exception("No ha ingresado los nombres");
+		}
+    	if (ModelUtil.isEmpty(u.getApellidos())) {
+    		throw new Exception("No ha ingresado los apellidos");
+		}
+    	if (ModelUtil.isEmpty(u.getEmail())) {
+    		throw new Exception("No ha ingresado el email");
+		}
+    	if (ModelUtil.isEmpty(u.getContrasenia())) {
+    		throw new Exception("No ha ingresado la contrase√±a");
+		}
+    	if (ModelUtil.isEmpty(u.getCedula())) {
+    		throw new Exception("No ha ingresado la c√©dula");
+		}
+    	
+    	Rol r=new Rol();
+    	r=findRoByNombre("Tesorero");
 				Usuario user=new Usuario();
 				user=u;
 				u.setRol(r);	
 				em.persist(user);
-			}
-			
-		}
+				LoginDto login=new LoginDto();
+				login.setNombreRol(r.getNombre());
+				login.setIdUsuario(user.getIdusuario());
+				login.setNombres(user.getNombres()+" "+user.getApellidos());
+				login.setCedula(user.getCedula());
+			    login.setActivo(true);
+		 return login;
     }
     /*
-  MÈtodo para registrar los roles
+  Metodo para registrar los roles
     */
     public void ingresarRol(Rol r) throws Exception {
       	if (r!=null) {
@@ -59,7 +75,7 @@ public class ManagerUsuario {
 		}
     }
     /*
-  MÈtodo para registrar los roles
+  Metodo para registrar los roles
     */
     public void ingresarUsuario(Usuario u, long id_rol_fk) throws Exception {
       	if (u==null) {
@@ -79,21 +95,21 @@ public class ManagerUsuario {
 		}
     }
     /*
-    MÈtodo para encontrar un rol por el ID  o PK 
+    Metodo para encontrar un rol por el ID  o PK 
     */
     public Rol findRolnById(long idrol) {
     	Rol rol= em.find(Rol.class, idrol);
 		return rol;
 	}
     /*
-    MÈtodo para encontrar un rol por el ID  o PK 
+    Metodo para encontrar un rol por el ID  o PK 
     */
     public Usuario findUsuarioById(int idUsuario) {
     	Usuario u= em.find(Usuario.class, idUsuario);
 		return u;
 	}
     /*
-    MÈtodo para encontrar la lista de roles
+    Metodo para encontrar la lista de roles
     */
 	@SuppressWarnings("unchecked")
 	public List<Rol> findAllRoles() {
@@ -102,7 +118,25 @@ public class ManagerUsuario {
 		return listaRoles;
 	}
     /*
-    MÈtodo para encontrar la lista de usuarios
+    Metodo para encontrar la lista de roles
+    */
+	@SuppressWarnings("unchecked")
+	public  Rol findRoByNombre(String nombreRol) {
+		Query q = em.createQuery("SELECT r FROM Rol r "
+				+ " where r.nombre=?1", Rol.class);
+		q.setParameter(1, nombreRol);
+		Rol r=new Rol();
+		List<Rol> listaRoles = q.getResultList();
+	if (listaRoles.isEmpty()) {
+		return r;
+	}else {
+		r=listaRoles.get(0);
+		return r;
+	}
+		 
+	}
+    /*
+    Metodo para encontrar la lista de usuarios
     */
 	@SuppressWarnings("unchecked")
 	public List<Usuario> findAllUsuarios() {
@@ -111,7 +145,7 @@ public class ManagerUsuario {
 		return listaUsuarios;
 	}
     /*
-    MÈtodo para editar Roles
+    Metodo para editar Roles
     */
 	 
 	public void  editarRol(Rol r) throws Exception {
