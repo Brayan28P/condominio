@@ -21,6 +21,8 @@ public class Usuario implements Serializable {
 
 	private String apellidos;
 
+	private String cedula;
+
 	private String contrasenia;
 
 	private String email;
@@ -57,6 +59,14 @@ public class Usuario implements Serializable {
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+
+	public String getCedula() {
+		return this.cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	public String getContrasenia() {
