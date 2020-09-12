@@ -30,6 +30,7 @@
 		background-position: center center; background-repeat: no-repeat; background-color: #85c1e9;">
 
 	<h:form id="formLogin" styleClass="login">
+	 <p:growl   showDetail="true" sticky="true" /> 
 		<div class="ui-fluid" align="center">
 			  <p:panel id="toggleable" header="Registro de Usuarios"   toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
  
@@ -40,14 +41,13 @@
 				  <p:row>
     <p:column>
 						<p:outputLabel for="nombre" value="Nombres:"></p:outputLabel>
-						<p:inputText id="nombre"
+						<p:inputText id="nombre" value="#{beanLogin.ingreUsuario.nombres}"
 							validatorMessage="Nombre: ingrese solo letras!"
 							 required="true"
 							requiredMessage="Ingrese sus nombres" maxlength="100">
 							<f:validateRegex
 								pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,100}"></f:validateRegex>
-						</p:inputText>
-						<p:message for="nombre"></p:message>
+						</p:inputText> 
 						</p:column>
 						</p:row>
 					
@@ -55,16 +55,13 @@
 					<p:column >
 						<p:outputLabel for="apellido" value="Apellidos:"></p:outputLabel>
 					
-						<p:inputText id="apellido"
+						<p:inputText id="apellido"  value="#{beanLogin.ingreUsuario.apellidos}"
 							validatorMessage="Apellido: ingrese solo letras!"
 							  required="true"
 							requiredMessage="Ingrese sus apellidos" maxlength="100">
 							<f:validateRegex
 								pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,100}"></f:validateRegex>
-						</p:inputText>
-					
-
-						<p:message for="apellido"></p:message>
+						</p:inputText> 
 					</p:column>
 				</p:row>
 
@@ -73,38 +70,58 @@
 						<p:outputLabel for="correo" value="Correo:" />
 					
 						<p:inputText id="correo" accesskey="true"
-						 required="true"
+						 required="true" value="#{beanLogin.ingreUsuario.email}"
 							requiredMessage="Ingrese un correo " maxlength="50"
 							validatorMessage="Ingrese un correo válido ejemplo: buitrongonzaga@gmail.com">
 							<f:validateRegex
 								pattern="(^[^@]+@[^@]+\.[a-zA-Z]{2,}$)"></f:validateRegex>
-						</p:inputText>
+						</p:inputText> 
+					</p:column>
+				</p:row>
+					<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel for="cedula" value="Cédula:" />
 					
-						<p:message for="correo"></p:message>
+						<p:inputText id="cedula" accesskey="true"
+						 required="true" value="#{beanLogin.ingreUsuario.cedula}"
+							requiredMessage="Ingrese el número de cédula " maxlength="10"
+							validatorMessage="ingrese el número de cédula"> 
+						</p:inputText> 
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column style="font-weight: bold;">
-						<p:outputLabel for="passU" value="Contraseña:" />
+						<p:outputLabel for="pswd1" value="Contraseña 1:" />
 				
-						<p:password id="passU"
-						  feedback="true"
-							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula . mayúscula y un número"
+						<p:password id="pswd1" value="#{beanLogin.ingreUsuario.contrasenia}"
+						  feedback="true" label="Contraseña 1"  match="pswd2"
+							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula, mayúscula y un número"
 							required="true" requiredMessage="Ingrese una contraseña segura"
 							maxlength="20" promptLabel="Ingrese una contraseña segura!"
 							weakLabel="Bajo" goodLabel="Media" strongLabel="Alta">
 							<f:validateRegex
 								pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}"></f:validateRegex>
-						</p:password>
+						</p:password> 
+					</p:column>
+				</p:row>
+					<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel for="pswd2" value="Contraseña 2:" />
 				
-						<p:message for="passU"></p:message>
+						<p:password id="pswd2" label="Contraseña 2" requiredMessage="Ingrese la contraseña 2"
+						   validatorMessage="La contraseñas no coinciden"
+							 value="#{beanLogin.ingreUsuario.contrasenia}"
+							required="true"   
+							maxlength="20" >
+						 
+						</p:password> 
 					</p:column>
 				</p:row>
 				
 				<p:row>
 					<p:column>
 						<div id="contenido" class="container-fluid col-lg-11">
-							<p:commandButton ajax="true" styleClass="button buttonBlue"
+							<p:commandButton ajax="true" styleClass="button buttonBlue" action="#{beanLogin.registrarseUsuario()}"
 								value="Registrarse"
 								 
 								validateClient="true">

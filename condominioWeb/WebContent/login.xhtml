@@ -22,9 +22,10 @@
 	<div class="container4 h-100;, ui-fluid">
 		<p:growl id="mensajes"  />
 <p:spacer></p:spacer>
-	
+	 
 
 			<h:form id="formLogin" styleClass="login" >
+			 <p:growl   showDetail="true" sticky="true" /> 
 				  <p:panel id="toggleable" header="Administración de Gastos de Condominio"   toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
  
 				<p:panelGrid styleClass="panelGridNoBorder w-100" columns="1">
@@ -47,8 +48,7 @@
 								validatorMessage="Ingrese un correo válido ejemplo: Brayan28P@gmail.com">
 								<f:validateRegex
 									pattern="^[A-Za-z0-9+_.-]+@(.+)$"></f:validateRegex>
-							</p:inputText>
-							<p:message for="correo"></p:message>
+							</p:inputText> 
 						</p:column>
 					</p:row>
 					<p:row>
@@ -60,9 +60,7 @@
 								requiredMessage="Ingrese una contraseña" value="#{beanLogin.contrasenia}"
 								  maxlength="20" />
 						</p:column>
-						<p:column>
-							<p:message for="pass"></p:message>
-						</p:column>
+					 
 					</p:row>
 					<p:row>
 						<p:column >

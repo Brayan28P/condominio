@@ -5,6 +5,7 @@ public class LoginDto {
 	private long idUsuario;
 	private String nombres;
 	private String nombreRol;
+	private String cedula;
 	private boolean activo;
 	public long getIdUsuario() {
 		return idUsuario;
@@ -29,6 +30,12 @@ public class LoginDto {
 	}
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+	public String getCedula() {
+		return cedula;
+	}
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 	
 }
