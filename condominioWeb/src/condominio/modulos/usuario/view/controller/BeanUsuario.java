@@ -123,6 +123,9 @@ public String actionRedireccionarRoles() {
 public String actionRedireccionarUsuarios() {
 	return"usuarios.xhtml?faces-redirect=true";
 }
+public String actionRedireccionarGastos() {
+	return"gastos.xhtml?faces-redirect=true";
+}
  public void actionRegistrarUsurio() {
 	 
  }
