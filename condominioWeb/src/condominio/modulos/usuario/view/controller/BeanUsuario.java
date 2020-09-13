@@ -21,6 +21,7 @@ public class BeanUsuario implements Serializable {
 private Usuario usuario=new Usuario();
 private Usuario editarUsuario=new Usuario();
 private long idrolfk;
+private long idrolfkE;
 private Rol r=new Rol();
 private Rol editarRol=new Rol();
 private  List<Rol> listaRoles;
@@ -48,6 +49,7 @@ public void actionListenerIngresarRol() {
 		JSFUtil.crearMensajeInfo("Rol creado correctamente");
 	} catch (Exception e) {
 		e.printStackTrace();
+		listaRoles=managerUsuario.findAllRoles();
 		JSFUtil.crearMensajeError(e.getMessage());
 	}
 }
@@ -55,25 +57,26 @@ public BeanUsuario() {
 	 
 }
 public void actionListenerCargarRol(Rol r) {
-	System.out.println("--"+r.getIdrol());
 	editarRol=r;
+	
+	
 }
 public void actionListenerIngresarUsuario() {
 	try {
-		String contrasenia="123";
-		contrasenia=Seguridad.encriptar(contrasenia);
-		usuario.setContrasenia(contrasenia);
+		usuario.setContrasenia(Seguridad.encriptar(usuario.getCedula()));
 		managerUsuario.ingresarUsuario(usuario, idrolfk);
 		listaUsuarios=managerUsuario.findAllUsuarios();
 		usuario=new Usuario();
 		JSFUtil.crearMensajeInfo("Usuario creado correctamente");
 	} catch (Exception e) {
 		e.printStackTrace();
+		listaUsuarios=managerUsuario.findAllUsuarios();
 		JSFUtil.crearMensajeError(e.getMessage());
 	}
 }
 public void actionListenerCargarUsuario(Usuario u) {
 	editarUsuario=u;
+	idrolfkE=u.getRol().getIdrol();
 }
 public void actionListenerEditarRol() {
 	try {
@@ -82,12 +85,38 @@ public void actionListenerEditarRol() {
 		JSFUtil.crearMensajeInfo("Rol editado correctamente.!");
 	} catch (Exception e) { 
 		e.printStackTrace();
+		listaRoles=managerUsuario.findAllRoles();
 		JSFUtil.crearMensajeError(e.getMessage());
 	}
 }
 public void actionListenerEditarUsuario() {
-	
+	try {
+		
+	} catch (Exception e) {
+		JSFUtil.crearMensajeError(e.getMessage());
+	}
 }
+public void actionListenerEliminarUsuario(long idUsuario) {
+	try {
+		managerUsuario.EliminarUsuario(idUsuario);
+		listaUsuarios=managerUsuario.findAllUsuarios();
+		JSFUtil.crearMensajeInfo("Usuario eliminado correctamente");
+	} catch (Exception e) {
+		JSFUtil.crearMensajeError(e.getMessage());
+	}
+}
+public void actionListenerEliminarRol(long idRol) {
+	try {
+		managerUsuario.EliminarRol(idRol);
+		listaRoles=managerUsuario.findAllRoles();
+		JSFUtil.crearMensajeInfo("Rol eliminado correctamente");
+	} catch (Exception e) {
+		JSFUtil.crearMensajeError(e.getMessage());
+	}
+}
+
+
+
 public String actionRedireccionarRoles() {
 	return"roles.xhtml?faces-redirect=true";
 }
@@ -150,6 +179,12 @@ public Rol getR() {
 }
 public void setR(Rol r) {
 	this.r = r;
+}
+public long getIdrolfkE() {
+	return idrolfkE;
+}
+public void setIdrolfkE(long idrolfkE) {
+	this.idrolfkE = idrolfkE;
 }
 	
  

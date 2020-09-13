@@ -69,7 +69,7 @@
 							update="form10"	onclick="PF('editarRol').show();" title="Editar" 
 								></p:commandButton>
 								
-							<p:commandButton update="@form"
+							<p:commandButton update="@form" actionListener="#{beanUsuario.actionListenerEliminarRol(r.idrol)}"
 							 
 								style="border:#FC1F0D;background-color:#FC1F0D" title="Eliminar"
 								icon="fa fa-times">

@@ -72,11 +72,11 @@
                 <h:outputText value="#{u.email}" />
             </p:column>
             <p:column headerText="OPCIONES">
-               <p:commandButton icon="fa fa-pencil" actionListener="#{beanUsuario.actionListenerCargarRol(r)}"
+               <p:commandButton icon="fa fa-pencil" actionListener="#{beanUsuario.actionListenerCargarUsuario(u)}"
 							update="form10"	onclick="PF('editarUsuario').show();" title="Editar" 
 								></p:commandButton>
 								
-							<p:commandButton update="@form"
+							<p:commandButton update="@form" actionListener="#{beanUsuario.actionListenerEliminarUsuario(u.idusuario)}"
 							 
 								style="border:#FC1F0D;background-color:#FC1F0D" title="Eliminar"
 								icon="fa fa-times">
@@ -93,7 +93,7 @@
     </div>
 </h:form>
 
-<p:dialog header="Ingresar nuevo Rol" widgetVar="nuevoUsuario"
+<p:dialog header="Ingresar nuevo Usuario" widgetVar="nuevoUsuario"
 		id="nuevoUsuario" modal="true" height="450" resizable="true"
 		responsive="true" minimizable="true" maximizable="true"
 		appendTo="@(body)">
@@ -111,11 +111,19 @@
 						value="#{beanUsuario.usuario.apellidos}" required="true"
 						requiredMessage="Ingrese los apellidos" maxlength="100">
 					</p:inputText>
-					<p:outputLabel value="correo:" />
+					<p:outputLabel value="Cédula:" />
 					<p:inputText
-						value="#{beanUsuario.usuario.email}" required="true"
-						requiredMessage="Ingrese los nombres" maxlength="100">
+						value="#{beanUsuario.usuario.cedula}" required="true"
+						requiredMessage="Ingrese la cédula" maxlength="10">
 					</p:inputText>
+					<p:outputLabel value="correo:" />
+					<p:inputText id="correo" accesskey="true" 
+						 required="true" value="#{beanUsuario.usuario.email}"
+							requiredMessage="Ingrese un correo " maxlength="50"
+							validatorMessage="Ingrese un correo válido ejemplo: buitrongonzaga@gmail.com">
+							<f:validateRegex
+								pattern="(^[^@]+@[^@]+\.[a-zA-Z]{2,}$)"></f:validateRegex>
+						</p:inputText> 
 					<p:outputLabel value="Seleccione el rol: " />
 					<p:selectOneMenu id="onerol" autoWidth="100%" required="true"
 						requiredMessage="Elija un rol"
@@ -142,7 +150,7 @@
 	</p:dialog>
 	</div>
 	<p:dialog header="Editar Usuario" widgetVar="editarUsuario"
-		id="editarUsuario" modal="true" height="230" resizable="true"
+		id="editarUsuario" modal="true" height="450" resizable="true"
 		responsive="true" minimizable="true" maximizable="true"
 		appendTo="@(body)">
 		<h:form id="form10">
@@ -162,17 +170,32 @@
 						value="#{beanUsuario.editarUsuario.apellidos}" required="true"
 						requiredMessage="Ingrese los apellidos" maxlength="100">
 					</p:inputText>
+					<p:outputLabel value="Cédula:" />
+					<p:inputText
+						value="#{beanUsuario.editarUsuario.cedula}" required="true"
+						requiredMessage="Ingrese los apellidos" maxlength="10" disabled="true">
+					</p:inputText>
 					<p:outputLabel value="Correo:" />
 					<p:inputText
-						value="#{beanUsuario.editarUsuario.email}" required="true"
+						value="#{beanUsuario.editarUsuario.email}" required="true" disabled="true"
 						requiredMessage="Ingrese el email" maxlength="100">
 					</p:inputText>
-					
+					<p:outputLabel value="Seleccione el rol: " />
+					<p:selectOneMenu id="onerol" autoWidth="100%" required="true"
+						requiredMessage="Elija un rol"
+						value="#{beanUsuario.idrolfkE}" effect="fade" var="ro"
+						filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="Select One" noSelectionOption="true" />
+						<f:selectItems value="#{beanUsuario.listaRoles}" var="r"
+							itemLabel="#{r.nombre}"
+							itemValue="#{r.idrol}" />
+
+					</p:selectOneMenu>
 
 				</p:panelGrid>
 				<p:panelGrid columns="2" layout="grid">
 					<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
-						style="width:100%"
+						style="width:100%" actionListener="#{beanUsuario.actionListenerEditarUsuario()}"
 						
 						oncomplete="nuevoUsuario" update="@form" ajax="false">
 					</p:commandButton>

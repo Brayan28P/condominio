@@ -1,5 +1,6 @@
 package condominio.modulos.usuario.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -8,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import condominio.core.model.entities.Gasto;
+import condominio.core.model.entities.PagoCondomino;
 import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.Usuario;
 import condominio.core.model.util.ModelUtil;
@@ -66,10 +69,15 @@ public class ManagerUsuario {
     */
     public void ingresarRol(Rol r) throws Exception {
       	if (r!=null) {
+      	Rol nrol=findRoByNombre(r.getNombre());
+      	if (nrol!=null) {
+      		System.out.println(".. "+nrol.getIdrol());
+      		throw new Exception("El rol "+r.getNombre()+" ya existe.");
+		}else {
       		Rol rol=new Rol();
 			rol=r;
 			em.persist(rol);
-    	
+		}
 		}else {
 			throw new Exception("El objeto rol no ha sido cargado correctamente.!");
 		}
@@ -104,7 +112,7 @@ public class ManagerUsuario {
     /*
     Metodo para encontrar un rol por el ID  o PK 
     */
-    public Usuario findUsuarioById(int idUsuario) {
+    public Usuario findUsuarioById(long idUsuario) {
     	Usuario u= em.find(Usuario.class, idUsuario);
 		return u;
 	}
@@ -128,7 +136,7 @@ public class ManagerUsuario {
 		Rol r=new Rol();
 		List<Rol> listaRoles = q.getResultList();
 	if (listaRoles.isEmpty()) {
-		return r;
+		return null;
 	}else {
 		r=listaRoles.get(0);
 		return r;
@@ -152,10 +160,88 @@ public class ManagerUsuario {
 if (r==null) {
 	throw new Exception("El objeto rol no ha sido cargado correctamente.!");
 }else {
-	em.merge(r);
+	Rol rol= new Rol();
+	rol=findRoByNombre(r.getNombre());
+	if (rol==null) {
+		em.merge(r);
+	}else {
+		if (r.getIdrol()!=rol.getIdrol()) {
+			throw new Exception("Ya existe un nombre con ese rol.!");
+		}
+	}
+  
 }
 
 	}
-    
+	
+	public void EliminarRol(long idRol) throws Exception {
+		if (idRol==0) {
+			throw new Exception("El rol no existe vuelva a intentarlo");
+		}else {
+			Rol r=new Rol();
+			r=findRolnById(idRol);
+			 boolean existeRolenUser=existeRolenUsuario(idRol);
+			 if (existeRolenUser) {
+				 throw new Exception("El rol no puede ser eliminado se encuentra utilizado en la entidad usuario");	
+			}else
+				em.remove(r);
+		}
+	}
+	public void EliminarUsuario(long idUsuario) throws Exception {
+		if (idUsuario==0) {
+			throw new Exception("El usuario no existe vuelva a intentarlo");
+		}else {
+			Usuario user=new Usuario();
+			user=findUsuarioById(idUsuario);
+			 boolean existeUserenPago=existeUsuarioenPagoCondominio(idUsuario);
+			 if (existeUserenPago) {
+				 throw new Exception("El usuario no puede ser eliminado se encuentra utilizado en la entidad Pago Condominio");	
+			}else {
+				boolean existeUsuarioenGato=existeUsuarioenGasto(idUsuario);
+				if (existeUsuarioenGato) {
+					 throw new Exception("El usuario no puede ser eliminado se encuentra utilizado en la entidad Gasto");	
+						}else
+				em.remove(user);
+			}
+				
+		}
+	}
+	
+	 @SuppressWarnings("unchecked")
+		public boolean existeUsuarioenGasto(long idUsuario) {
+	      	Query q = em.createQuery("SELECT g FROM Gasto g "
+	    			+ "where g.usuario.idusuario=?1", Gasto.class);
+	      	q.setParameter(1, idUsuario);
+	      	List<Gasto>listaGastos=new ArrayList<Gasto>();
+			listaGastos= q.getResultList(); 
+			if (listaGastos.isEmpty()) {
+				return false;
+			}else
+			return true;
+	    }
+	 @SuppressWarnings("unchecked")
+		public boolean existeUsuarioenPagoCondominio(long idUsuario) {
+	      	Query q = em.createQuery("SELECT p FROM PagoCondomino p "
+	    			+ "where p.usuario.idusuario=?1", PagoCondomino.class);
+	      	q.setParameter(1, idUsuario);
+	      	List<PagoCondomino>listaPagos=new ArrayList<PagoCondomino>();
+			listaPagos= q.getResultList(); 
+			if (listaPagos.isEmpty()) {
+				return false;
+			}else
+			return true;
+	    }
+    @SuppressWarnings("unchecked")
+	public boolean existeRolenUsuario(long idRol) {
+      	Query q = em.createQuery("SELECT u FROM Usuario u "
+    			+ "where u.rol.idrol=?1", Usuario.class);
+      	q.setParameter(1, idRol);
+      	List<Usuario>listaUsuarios=new ArrayList<Usuario>();
+		listaUsuarios= q.getResultList(); 
+		if (listaUsuarios.isEmpty()) {
+			return false;
+		}else
+		return true;
+    }
     
 }
