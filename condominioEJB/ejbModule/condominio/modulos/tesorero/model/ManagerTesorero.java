@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import condominio.core.model.entities.Gasto;
+import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.TipoGasto;
 
 /**
@@ -101,9 +102,9 @@ public class ManagerTesorero {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Gasto> findAllTipoGastos() {
-		Query q = em.createQuery("SELECT r FROM tipo_gasto r order by r.idgasto asc", Gasto.class);
-		List<Gasto> lista = q.getResultList();
+	public List<TipoGasto> findAllTipoGastos() {
+		Query q = em.createQuery("SELECT r FROM TipoGasto r order by r.idgasto asc", TipoGasto.class);
+		List<TipoGasto> lista = q.getResultList();
 		return lista;
 	}
 
@@ -115,14 +116,15 @@ public class ManagerTesorero {
 	 */
 	public void ingresarTipoGasto(TipoGasto gasto) throws Exception {
 		if (gasto != null) {
-			TipoGasto g = new TipoGasto();
-			g = findTipoGastoById(gasto.getIdgasto());
-			if (g == null) {
-				em.persist(gasto);
-			} else if (g.getIdgasto() != gasto.getIdgasto()) {
-				throw new Exception("Ya existe un tipo gasto con ese nombre!");
+			{
+				TipoGasto g = new TipoGasto();
+				g = findTipoGastoByNombre(gasto.getNombre());
+				if (g == null) {
+					em.persist(gasto);
+				} else {
+					throw new Exception("Ya existe un tipo gasto con ese nombre!");
+				}
 			}
-			em.persist(gasto);
 		} else {
 			throw new Exception("El objeto Tipo Gasto no ha sido cargado correctamente.!");
 		}
@@ -140,6 +142,27 @@ public class ManagerTesorero {
 	}
 
 	/**
+	 * Encontrar Tipo Gasto por Nombre
+	 * 
+	 * @param nombre
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public TipoGasto findTipoGastoByNombre(String nombre) {
+		Query q = em.createQuery("SELECT r FROM TipoGasto r " + " where r.nombre=?1", TipoGasto.class);
+		q.setParameter(1, nombre);
+		TipoGasto r = new TipoGasto();
+		List<TipoGasto> lista = q.getResultList();
+		if (lista.isEmpty()) {
+			return null;
+		} else {
+			r = lista.get(0);
+			return r;
+		}
+
+	}
+
+	/**
 	 * Editar Tipo Gasto
 	 * 
 	 * @param g
@@ -150,7 +173,7 @@ public class ManagerTesorero {
 			throw new Exception("El objeto Tipo Gasto no ha sido cargado correctamente.!");
 		} else {
 			TipoGasto gasto = new TipoGasto();
-			gasto = findTipoGastoById(g.getIdgasto());
+			gasto = findTipoGastoByNombre(g.getNombre());
 			if (gasto == null) {
 				em.merge(g);
 			} else if (g.getIdgasto() != gasto.getIdgasto()) {
