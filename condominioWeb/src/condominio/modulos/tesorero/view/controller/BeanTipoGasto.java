@@ -44,7 +44,7 @@ public class BeanTipoGasto implements Serializable {
 			managerTesorero.ingresarTipoGasto(tipoGasto);
 			listaTipoGastos = managerTesorero.findAllTipoGastos();
 			tipoGasto = new TipoGasto();
-			JSFUtil.crearMensajeInfo("Tipo Gasto creado correctamente");
+			JSFUtil.crearMensajeInfo("Tipo gasto creado correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
 			listaTipoGastos = managerTesorero.findAllTipoGastos();
@@ -56,7 +56,7 @@ public class BeanTipoGasto implements Serializable {
 		try {
 			managerTesorero.editarTipoGasto(editarTipoGasto);
 			listaTipoGastos = managerTesorero.findAllTipoGastos();
-			JSFUtil.crearMensajeInfo("Tipo Gasto editado correctamente.!");
+			JSFUtil.crearMensajeInfo("Tipo gasto editado correctamente.!");
 		} catch (Exception e) { 
 			e.printStackTrace();
 			listaTipoGastos = managerTesorero.findAllTipoGastos();
@@ -68,7 +68,7 @@ public class BeanTipoGasto implements Serializable {
 		try {
 			managerTesorero.eliminarTipoGasto(idTipoGasto);
 			listaTipoGastos = managerTesorero.findAllTipoGastos();
-			JSFUtil.crearMensajeInfo("Tipo Gasto eliminado correctamente");
+			JSFUtil.crearMensajeInfo("Tipo gasto eliminado correctamente");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeError(e.getMessage());
 		}
