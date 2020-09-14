@@ -24,6 +24,7 @@ private String correo;
 private String contrasenia;
 private LoginDto login;
 private Usuario ingreUsuario=new Usuario();
+private String verificarContraseña;
 
 @EJB ManagerLogin managerLogin;
 @EJB ManagerUsuario managerUsuario;
@@ -38,6 +39,7 @@ private Usuario ingreUsuario=new Usuario();
 	public String registrarseUsuario() {
 		
 		try {
+			boolean verificarC=managerUsuario.verificarContraseñas(ingreUsuario.getContrasenia(), verificarContraseña);
 			ingreUsuario.setContrasenia(Seguridad.encriptar(ingreUsuario.getContrasenia()));
 			login=managerUsuario.registrarUsuario(ingreUsuario);
 			ingreUsuario=new Usuario();
@@ -121,6 +123,12 @@ return"";
 	}
 	public void setIngreUsuario(Usuario ingreUsuario) {
 		this.ingreUsuario = ingreUsuario;
+	}
+	public String getVerificarContraseña() {
+		return verificarContraseña;
+	}
+	public void setVerificarContraseña(String verificarContraseña) {
+		this.verificarContraseña = verificarContraseña;
 	}
 	
 }

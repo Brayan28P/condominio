@@ -29,6 +29,18 @@ public class ManagerUsuario {
 
 
     }
+    public boolean verificarContraseñas(String contrasenia1,String contrasenia2) throws Exception {
+    	if (ModelUtil.isEmpty(contrasenia1)) {
+    		throw new Exception("No ha ingresado la contraseña 1");
+		}
+    	if (ModelUtil.isEmpty(contrasenia2)) {
+    		throw new Exception("No ha ingresado la contraseña 2");
+		}
+    	if (!contrasenia1.equals(contrasenia2)) {
+    		throw new Exception("La contraseñas no coinciden");
+		}else return true;
+    	
+    }
     
     /*
      Metodo para que se registren los usuarios manualmente
@@ -49,9 +61,12 @@ public class ManagerUsuario {
     	if (ModelUtil.isEmpty(u.getCedula())) {
     		throw new Exception("No ha ingresado la cédula");
 		}
+    	if (!ModelUtil.validarCedula(u.getCedula())) {
+    		throw new Exception("La cédula es incorrecta ingrese una válida porfavor");
+		}
     	
     	Rol r=new Rol();
-    	r=findRoByNombre("Tesorero");
+    	r=findRoByNombre("Condominio");
 				Usuario user=new Usuario();
 				user=u;
 				u.setRol(r);	

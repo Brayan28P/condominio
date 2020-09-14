@@ -43,7 +43,7 @@
 				  <p:row>
     <p:column>
 						<p:outputLabel for="nombre" value="Nombres:"></p:outputLabel>
-						<p:inputText id="nombre" value="#{beanLogin.ingreUsuario.nombres}"
+						<p:inputText id="nombre" value="#{beanLogin.ingreUsuario.nombres}" onkeypress="return SoloLetras(event);"
 							validatorMessage="Nombre: ingrese solo letras!"
 							 required="true"
 							requiredMessage="Ingrese sus nombres" maxlength="100">
@@ -59,7 +59,7 @@
 					
 						<p:inputText id="apellido"  value="#{beanLogin.ingreUsuario.apellidos}"
 							validatorMessage="Apellido: ingrese solo letras!"
-							  required="true"
+							  required="true" onkeypress="return SoloLetras(event);"
 							requiredMessage="Ingrese sus apellidos" maxlength="100">
 							<f:validateRegex
 								pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{1,100}"></f:validateRegex>
@@ -84,7 +84,7 @@
 					<p:column style="font-weight: bold;">
 						<p:outputLabel for="cedula" value="Cédula:" />
 					
-						<p:inputText id="cedula" accesskey="true"
+						<p:inputText id="cedula" accesskey="true" onkeypress="return SoloNumeros(event);"
 						 required="true" value="#{beanLogin.ingreUsuario.cedula}"
 							requiredMessage="Ingrese el número de cédula " maxlength="10"
 							validatorMessage="ingrese el número de cédula"> 
@@ -93,10 +93,10 @@
 				</p:row>
 				<p:row>
 					<p:column style="font-weight: bold;">
-						<p:outputLabel for="pswd1" value="Contraseña 1:" />
+						<p:outputLabel  value="Contraseña 1:" />
 				
-						<p:password id="pswd1" value="#{beanLogin.ingreUsuario.contrasenia}"
-						  feedback="true" label="Contraseña 1"  match="pswd2"
+						<p:password   value="#{beanLogin.ingreUsuario.contrasenia}"
+						  feedback="true" label="Contraseña 1"  
 							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula, mayúscula y un número"
 							required="true" requiredMessage="Ingrese una contraseña segura"
 							maxlength="20" promptLabel="Ingrese una contraseña segura!"
@@ -108,14 +108,16 @@
 				</p:row>
 					<p:row>
 					<p:column style="font-weight: bold;">
-						<p:outputLabel for="pswd2" value="Contraseña 2:" />
+						<p:outputLabel   value="Contraseña 2:" />
 				
-						<p:password id="pswd2" label="Contraseña 2" requiredMessage="Ingrese la contraseña 2"
-						   validatorMessage="La contraseñas no coinciden"
-							 value="#{beanLogin.ingreUsuario.contrasenia}"
-							required="true"   
-							maxlength="20" >
-						 
+					<p:password  value="#{beanLogin.verificarContraseña}"
+						  feedback="true" label="Contraseña 1"   
+							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula, mayúscula y un número"
+							required="true" requiredMessage="Ingrese una contraseña segura"
+							maxlength="20" promptLabel="Ingrese una contraseña segura!"
+							weakLabel="Bajo" goodLabel="Media" strongLabel="Alta">
+							<f:validateRegex
+								pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}"></f:validateRegex>
 						</p:password> 
 					</p:column>
 				</p:row>
