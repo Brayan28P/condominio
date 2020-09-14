@@ -4,9 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
-
-
+<f:metadata>
+<f:event listener="#{beanLogin.actionComprobarSessionLogin()}" type="preRenderView"></f:event>
+</f:metadata>
 <ui:composition template="/WEB-INF/template/template_general.xhtml">
 
 	<ui:define name="head">
