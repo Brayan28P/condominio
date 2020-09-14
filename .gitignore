@@ -3,3 +3,8 @@
 .settings
 condominioWeb/.classpath
 condominioEJB/.classpath
+condominioWeb/.settings/org.eclipse.wst.common.project.facet.core.xml
+condominioWeb/.classpath
+condominioEJB/.settings/org.eclipse.wst.common.project.facet.core.xml
+condominioEJB/.classpath
+condominio/.settings/org.eclipse.wst.common.project.facet.core.xml
