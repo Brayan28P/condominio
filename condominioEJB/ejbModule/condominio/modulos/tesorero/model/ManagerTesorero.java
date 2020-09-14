@@ -210,7 +210,7 @@ public class ManagerTesorero {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<TipoPago> findAllTipoPagos() {
-		Query q = em.createQuery("SELECT r FROM TipoPago r order by r.idPago asc", TipoPago.class);
+		Query q = em.createQuery("SELECT r FROM TipoPago r order by r.idpago asc", TipoPago.class);
 		List<TipoPago> lista = q.getResultList();
 		return lista;
 	}
