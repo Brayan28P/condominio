@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/template_general.xhtml">
+
+	<ui:define name="head">
+		<link rel="icon" type="image/png"
+			href="../resources/images/logoTitle.png" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<div id="menu" style="margin-top: 66px;">
+			<h:form>
+				<nav class="navbar navbar-expand-lg navbar-dark fixed-top navBorder"
+					style="background-color: #E4E5E5; margin-top:66px; z-index:1000">
+
+				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">
+					<p:menuitem title="Ingresar nuevo tipo Pago"
+						onclick="PF('nuevoTPago').show();" icon="fa fa-plus"
+						style="font-size: 16px;" value="Nuevo Tipo Pago" />
+				</p:menubar> </nav>
+			</h:form>
+		</div>
+
+		<div id="migajas" class="container-fluid col-lg-12"
+			style="margin-top: 105px;">
+			<nav class="navbar navbar-expand-lg fixed-top labelBorder"
+				style="margin-top:105px; z-index:100">
+			<ol class="breadcrumb w-100" style="background-color: white">
+				<li class="breadcrumb-item" style="font-size: 14px;"><a
+					href="menu.xhtml"><i class="fa fa-home" />&nbsp;Inicio</a></li>
+				<li class="breadcrumb-item active" style="font-size: 14px;">Tipo Pagos</li>
+			</ol>
+			</nav>
+		</div>
+
+
+		<div id="mensajes" class="container-fluid col-lg-12"
+			style="margin-top: 150px;">
+			<p:messages>
+				<p:autoUpdate />
+			</p:messages>
+			<p:growl>
+				<p:autoUpdate />
+			</p:growl>
+		</div>
+
+		<div class="container-fluid col-lg-12">
+
+			<h:form id="form2">
+				<div class="ui-fluid">
+					<p:dataTable var="g" value="#{beanTipoPago.listaTipoPagos}"
+						reflow="true" style="margin-top:20px">
+						<f:facet name="header">
+              LISTA DE TIPOS PAGOS
+            </f:facet>
+						<p:column headerText="Id">
+							<h:outputText value="#{g.idpago}" />
+						</p:column>
+
+						<p:column headerText="Tipo Pago">
+							<h:outputText value="#{g.nombre}" />
+						</p:column>
+						<p:column headerText="OPCIONES">
+							<p:commandButton icon="fa fa-pencil"
+								actionListener="#{beanTipoPago.actionListenerCargarTipoPago(g)}"
+								update="form10" onclick="PF('editarTPago').show();" title="Editar"></p:commandButton>
+
+							<p:commandButton update="@form"
+								actionListener="#{beanTipoPago.actionListenerEliminarTipoPago(g.idpago)}"
+								style="border:#FC1F0D;background-color:#FC1F0D" title="Eliminar"
+								icon="fa fa-times">
+								<p:confirm header="Confirmación" message="Desea eliminar?"
+									icon="fa fa-times" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+
+			</h:form>
+			<p:dialog header="Ingresar nuevo tipo Pago" widgetVar="nuevoTPago"
+				id="nuevoTPago" modal="true" height="150" resizable="true"
+				responsive="true" minimizable="true" maximizable="true"
+				appendTo="@(body)">
+				<h:form id="form1">
+					<div class="ui-fluid">
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel value="Nombre" />
+							<p:inputText value="#{beanTipoPago.tipoPago.nombre}" required="true"
+								requiredMessage="Ingrese nombre del tipo de Pago" maxlength="100">
+							</p:inputText>
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+								style="width:100%"
+								actionListener="#{beanTipoPago.actionListenerIngresarTipoPago()}"
+								oncomplete="nuevoTPago" update="@form" ajax="false">
+							</p:commandButton>
+							<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
+								dismiss="modal" />
+						</p:panelGrid>
+					</div>
+				</h:form>
+			</p:dialog>
+
+		</div>
+		<p:dialog header="Editar tipo Pago" widgetVar="editarTPago" id="editarTPago"
+			modal="true" height="230" resizable="true" responsive="true"
+			minimizable="true" maximizable="true" appendTo="@(body)">
+			<h:form id="form10">
+				<div class="ui-fluid">
+					<p:panelGrid columns="1" layout="grid">
+						<p:outputLabel value="ID:" />
+						<p:inputText value="#{beanTipoPago.editarTipoPago.idpago}"
+							required="true" disabled="true">
+						</p:inputText>
+						<p:outputLabel value="Nombre:" />
+						<p:inputText value="#{beanTipoPago.editarTipoPago.nombre}"
+							required="true" requiredMessage="Ingrese"
+							maxlength="100">
+						</p:inputText>
+
+					</p:panelGrid>
+					<p:panelGrid columns="2" layout="grid">
+						<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+							style="width:100%"
+							actionListener="#{beanTipoPago.actionListenerEditarTipoPago()}"
+							oncomplete="nuevoRol" update="@form" ajax="false">
+						</p:commandButton>
+						<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
+							dismiss="modal" />
+					</p:panelGrid>
+				</div>
+			</h:form>
+		</p:dialog>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sí" type="button"
+				styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>
