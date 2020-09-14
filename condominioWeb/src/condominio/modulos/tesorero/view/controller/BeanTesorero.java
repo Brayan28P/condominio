@@ -6,10 +6,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import condominio.core.model.entities.Gasto;
+import condominio.core.model.entities.TipoGasto;
+import condominio.core.model.entities.Usuario;
 import condominio.modulos.tesorero.model.ManagerTesorero;
+import condominio.modulos.usuario.model.ManagerUsuario;
 import condominio.modulos.util.view.controller.JSFUtil;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -20,9 +26,11 @@ public class BeanTesorero implements Serializable {
 	private List<Gasto> listaGastos;
 	private Gasto gasto = new Gasto();
 	private Gasto editarGasto = new Gasto();
+	private long idtgastofk;
 
 	@EJB
 	ManagerTesorero managerTesorero;
+	ManagerUsuario managerUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -41,6 +49,12 @@ public class BeanTesorero implements Serializable {
 
 	public void actionListenerIngresarGasto() {
 		try {
+			TipoGasto tipoGasto=managerTesorero.findTipoGastoById(idtgastofk);
+			Date fechatransaccion=new Date();
+			Usuario usuario= managerUsuario.findUsuarioById(2);
+			gasto.setTipoGasto(tipoGasto);
+			gasto.setFechatransaccion(fechatransaccion);
+			gasto.setUsuario(usuario);
 			managerTesorero.ingresarGasto(gasto);
 			listaGastos = managerTesorero.findAllGastos();
 			gasto = new Gasto();
@@ -51,13 +65,13 @@ public class BeanTesorero implements Serializable {
 			JSFUtil.crearMensajeError(e.getMessage());
 		}
 	}
-	
+
 	public void actionListenerEditarGasto() {
 		try {
 			managerTesorero.editarGasto(editarGasto);
 			listaGastos = managerTesorero.findAllGastos();
 			JSFUtil.crearMensajeInfo("Rol editado correctamente.!");
-		} catch (Exception e) { 
+		} catch (Exception e) {
 			e.printStackTrace();
 			listaGastos = managerTesorero.findAllGastos();
 			JSFUtil.crearMensajeError(e.getMessage());
@@ -96,6 +110,14 @@ public class BeanTesorero implements Serializable {
 
 	public void setEditarGasto(Gasto editarGasto) {
 		this.editarGasto = editarGasto;
+	}
+
+	public long getIdtgastofk() {
+		return idtgastofk;
+	}
+
+	public void setIdtgastofk(long idtgastofk) {
+		this.idtgastofk = idtgastofk;
 	}
 
 }
