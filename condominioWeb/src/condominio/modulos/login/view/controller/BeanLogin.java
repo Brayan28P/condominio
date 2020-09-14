@@ -3,6 +3,7 @@ package condominio.modulos.login.view.controller;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -13,6 +14,7 @@ import condominio.modulos.usuario.model.ManagerUsuario;
 import condominio.modulos.util.view.controller.JSFUtil;
 import condominio.modulos.util.view.controller.Seguridad;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 @Named
@@ -25,7 +27,7 @@ private String contrasenia;
 private LoginDto login;
 private Usuario ingreUsuario=new Usuario();
 private String verificarContraseña;
-
+private boolean activoLogin;
 @EJB ManagerLogin managerLogin;
 @EJB ManagerUsuario managerUsuario;
 	public BeanLogin() {
@@ -40,9 +42,11 @@ private String verificarContraseña;
 		
 		try {
 			boolean verificarC=managerUsuario.verificarContraseñas(ingreUsuario.getContrasenia(), verificarContraseña);
+			if (verificarC) {
 			ingreUsuario.setContrasenia(Seguridad.encriptar(ingreUsuario.getContrasenia()));
 			login=managerUsuario.registrarUsuario(ingreUsuario);
 			ingreUsuario=new Usuario();
+			}
 			JSFUtil.crearMensajeInfo("Bienvenido");
 			return "condominio/menu?faces-redirect=true";
 		} catch (Exception e) {
@@ -100,6 +104,69 @@ return"";
 			return "";
 		}
 	}
+	
+	
+	public void actionComprobarSessionLogin(){
+		try {
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    	String path=ec.getRequestPathInfo();
+    	if(login==null) {
+    		if(path.equals("/login.xhtml"))
+    	    	return;
+    		if(path.equals("/registrarse.xhtml"))
+    	    	return;
+    		if (path.equals("/tesorero/menu.xhtml")) {
+    			ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");
+			}
+    		if (path.equals("/condominio/menu.xhtml")) {
+    			ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");	
+    				} 
+    	}
+    	else {
+    		if(path.equals("/login.xhtml")||path.equals("/registrarse.xhtml")) {
+    			if (login.getNombreRol().equals("Condominio")) {
+    				ec.redirect(ec.getRequestContextPath() +	 "/faces/condominio/menu.xhtml");
+    		    		
+				}else {
+						ec.redirect(ec.getRequestContextPath() + "/faces/tesorero/menu.xhtml");
+				}
+    		}
+        	//si hizo login, verificamos que acceda a paginas permitidas:
+        
+    	//si hizo login, verificamos que acceda a paginas permitidas:
+    	if(login.getNombreRol().equals("Condominio")){ 
+    		if(!path.contains("/condominio/"))
+    	ec.redirect(ec.getRequestContextPath() +"/faces/condominio/menu.xhtml");
+    	else
+    	return;
+    	}else {
+    		if(!path.contains("/tesorero/"))
+    	    	ec.redirect(ec.getRequestContextPath() + "/faces/tesorero/menu.xhtml");
+    	    	else
+    	    	return;	
+    	} 
+    	
+    	}
+    	} catch (IOException e) {
+    	e.printStackTrace();
+    	JSFUtil.crearMensajeError(""+e.getMessage());
+    	}
+    	return;
+    	}          
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getCorreo() {
 		return correo;
 	}
@@ -129,6 +196,12 @@ return"";
 	}
 	public void setVerificarContraseña(String verificarContraseña) {
 		this.verificarContraseña = verificarContraseña;
+	}
+	public boolean isActivoLogin() {
+		return activoLogin;
+	}
+	public void setActivoLogin(boolean activoLogin) {
+		this.activoLogin = activoLogin;
 	}
 	
 }
