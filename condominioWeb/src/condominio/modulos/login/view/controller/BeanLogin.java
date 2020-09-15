@@ -26,7 +26,7 @@ private String correo;
 private String contrasenia;
 private LoginDto login;
 private Usuario ingreUsuario=new Usuario();
-private String verificarContraseña;
+private String verificarContrasenia;
 private boolean activoLogin;
 @EJB ManagerLogin managerLogin;
 @EJB ManagerUsuario managerUsuario;
@@ -41,7 +41,7 @@ private boolean activoLogin;
 	public String registrarseUsuario() {
 		
 		try {
-			boolean verificarC=managerUsuario.verificarContraseñas(ingreUsuario.getContrasenia(), verificarContraseña);
+			boolean verificarC=managerUsuario.verificarContrasenias(ingreUsuario.getContrasenia(), verificarContrasenia);
 			if (verificarC) {
 			ingreUsuario.setContrasenia(Seguridad.encriptar(ingreUsuario.getContrasenia()));
 			login=managerUsuario.registrarUsuario(ingreUsuario);
@@ -178,11 +178,11 @@ return"";
 	public void setIngreUsuario(Usuario ingreUsuario) {
 		this.ingreUsuario = ingreUsuario;
 	}
-	public String getVerificarContraseña() {
-		return verificarContraseña;
+	public String getVerificarContraseniaa() {
+		return verificarContrasenia;
 	}
-	public void setVerificarContraseña(String verificarContraseña) {
-		this.verificarContraseña = verificarContraseña;
+	public void setVerificarContrasenia(String verificarContrasenia) {
+		this.verificarContrasenia = verificarContrasenia;
 	}
 	public boolean isActivoLogin() {
 		return activoLogin;
