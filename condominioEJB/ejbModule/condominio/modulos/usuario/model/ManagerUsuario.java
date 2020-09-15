@@ -29,7 +29,7 @@ public class ManagerUsuario {
 
 
     }
-    public boolean verificarContraseñas(String contrasenia1,String contrasenia2) throws Exception {
+    public boolean verificarContrasenias(String contrasenia1,String contrasenia2) throws Exception {
     	if (ModelUtil.isEmpty(contrasenia1)) {
     		throw new Exception("No ha ingresado la contraseña 1");
 		}
