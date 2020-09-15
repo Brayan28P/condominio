@@ -130,13 +130,9 @@
 					<p:selectOneMenu id="onerol" autoWidth="100%" required="true"
 						requiredMessage="Elija un rol"
 						value="#{beanUsuario.idrolfk}" effect="fade" var="ro"
-						filter="true" filterMatchMode="contains">
-						<f:selectItem itemLabel="Select One" noSelectionOption="true" />
-						<f:selectItems value="#{beanUsuario.listaRoles}" var="r"
-							itemLabel="#{r.nombre}"
-							itemValue="#{r.idrol}" />
-
-					</p:selectOneMenu>
+						filter="true" filterMatchMode="contains"> 
+						<f:selectItem itemLabel="Tesorero" itemValue="21" />
+                    </p:selectOneMenu>
 				</p:panelGrid>
 				<p:panelGrid columns="2" layout="grid">
 					<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
