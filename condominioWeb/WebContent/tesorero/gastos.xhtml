@@ -100,7 +100,7 @@
 
 			</h:form>
 			<p:dialog header="Ingresar nuevo gasto" widgetVar="nuevoGasto"
-				id="nuevoGasto" modal="true" height="450" resizable="true"
+				id="nuevoGasto" modal="true" height="400" resizable="true"
 				responsive="true" minimizable="true" maximizable="true"
 				appendTo="@(body)">
 				<h:form id="form1">
@@ -141,26 +141,39 @@
 
 		</div>
 		<p:dialog header="Editar gasto" widgetVar="editarGasto"
-			id="editarGasto" modal="true" height="230" resizable="true"
+			id="editarGasto" modal="true" height="400" resizable="true"
 			responsive="true" minimizable="true" maximizable="true"
 			appendTo="@(body)">
 			<h:form id="form10">
 				<div class="ui-fluid">
 					<p:panelGrid columns="1" layout="grid">
-						<p:outputLabel value="ID:" />
-						<p:inputText value="#{beanTesorero.editarGasto.idgastoc}"
-							required="true" disabled="true">
+						<p:outputLabel value="Valor" />
+						<p:inputText value="#{beanTesorero.editarGasto.idgastoc}" required="true" disabled="true"
+							requiredMessage="Ingrese valor" maxlength="100">
 						</p:inputText>
-						<p:outputLabel value="Usuario:" />
-						<p:inputText value="#{beanTesorero.editarGasto.usuario}"
-							required="true" requiredMessage="Ingrese" maxlength="100">
+						<p:outputLabel value="Seleccione tipo gasto: " />
+						<p:selectOneMenu id="onegasto" autoWidth="100%" required="true"
+							requiredMessage="Elija un tipo gasto"
+							value="#{beanTesorero.idtgastofkE}" effect="fade" var="ro"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
+							<f:selectItems value="#{beanTipoGasto.listaTipoGastos}" var="t"
+								itemLabel="#{t.nombre}" itemValue="#{t.idgasto}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Descripción" />
+						<p:inputText value="#{beanTesorero.editarGasto.descripcion}"
+							required="true" requiredMessage="Ingrese descripción"
+							maxlength="100">
 						</p:inputText>
-
+						<p:outputLabel value="Valor" />
+						<p:inputText value="#{beanTesorero.editarGasto.valor}" required="true"
+							requiredMessage="Ingrese valor" maxlength="100">
+						</p:inputText>
 					</p:panelGrid>
 					<p:panelGrid columns="2" layout="grid">
 						<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
 							style="width:100%"
-							actionListener="#{beanUsuario.actionListenerEditarRol()}"
+							actionListener="#{beanTesorero.actionListenerEditarGasto()}"
 							oncomplete="nuevoRol" update="@form" ajax="false">
 						</p:commandButton>
 						<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"

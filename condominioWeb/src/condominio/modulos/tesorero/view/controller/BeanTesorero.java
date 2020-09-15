@@ -3,11 +3,13 @@ package condominio.modulos.tesorero.view.controller;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import condominio.core.model.entities.Gasto;
 import condominio.core.model.entities.TipoGasto;
 import condominio.core.model.entities.Usuario;
+import condominio.modulos.login.view.controller.BeanLogin;
 import condominio.modulos.tesorero.model.ManagerTesorero;
 import condominio.modulos.usuario.model.ManagerUsuario;
 import condominio.modulos.util.view.controller.JSFUtil;
@@ -27,10 +29,13 @@ public class BeanTesorero implements Serializable {
 	private Gasto gasto = new Gasto();
 	private Gasto editarGasto = new Gasto();
 	private long idtgastofk;
-
+	private long idtgastofkE;
 	@EJB
 	ManagerTesorero managerTesorero;
+	@EJB
 	ManagerUsuario managerUsuario;
+	@Inject
+	private BeanLogin beanLogin;
 
 	@PostConstruct
 	public void init() {
@@ -45,13 +50,14 @@ public class BeanTesorero implements Serializable {
 
 	public void actionListenerCargarGasto(Gasto g) {
 		editarGasto = g;
+		idtgastofkE=g.getTipoGasto().getIdgasto();
 	}
 
 	public void actionListenerIngresarGasto() {
 		try {
-			TipoGasto tipoGasto=managerTesorero.findTipoGastoById(idtgastofk);
-			Date fechatransaccion=new Date();
-			Usuario usuario= managerUsuario.findUsuarioById(2);
+			TipoGasto tipoGasto = managerTesorero.findTipoGastoById(idtgastofk);
+			Date fechatransaccion = new Date();
+			Usuario usuario = managerUsuario.findUsuarioById(beanLogin.getLogin().getIdUsuario());
 			gasto.setTipoGasto(tipoGasto);
 			gasto.setFechatransaccion(fechatransaccion);
 			gasto.setUsuario(usuario);
@@ -68,9 +74,15 @@ public class BeanTesorero implements Serializable {
 
 	public void actionListenerEditarGasto() {
 		try {
+			TipoGasto tipoGasto = managerTesorero.findTipoGastoById(idtgastofkE);
+			Date fechatransaccion = new Date();
+			Usuario usuario = managerUsuario.findUsuarioById(beanLogin.getLogin().getIdUsuario());
+			editarGasto.setTipoGasto(tipoGasto);
+			editarGasto.setFechatransaccion(fechatransaccion);
+			editarGasto.setUsuario(usuario);
 			managerTesorero.editarGasto(editarGasto);
 			listaGastos = managerTesorero.findAllGastos();
-			JSFUtil.crearMensajeInfo("Rol editado correctamente.!");
+			JSFUtil.crearMensajeInfo("Gasto editado correctamente.!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			listaGastos = managerTesorero.findAllGastos();
@@ -120,4 +132,13 @@ public class BeanTesorero implements Serializable {
 		this.idtgastofk = idtgastofk;
 	}
 
+	public long getIdtgastofkE() {
+		return idtgastofkE;
+	}
+
+	public void setIdtgastofkE(long idtgastofkE) {
+		this.idtgastofkE = idtgastofkE;
+	}
+
+	
 }
