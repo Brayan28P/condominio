@@ -107,22 +107,18 @@ return"";
 	
 	
 	public void actionComprobarSessionLogin(){
+		
 		try {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
     	String path=ec.getRequestPathInfo();
     	if(login==null) {
-    		if(path.equals("/login.xhtml"))
+    	 
+    		if(path.equals("/login.xhtml")||path.equals("/registrarse.xhtml")) {
     	    	return;
-    		if(path.equals("/registrarse.xhtml"))
-    	    	return;
-    		if (path.equals("/tesorero/menu.xhtml")) {
-    			ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");
-			}
-    		if (path.equals("/condominio/menu.xhtml")) {
-    			ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");	
-    				} 
+    		}else
+    		ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");	
     	}
-    	else {
+    	else { 
     		if(path.equals("/login.xhtml")||path.equals("/registrarse.xhtml")) {
     			if (login.getNombreRol().equals("Condominio")) {
     				ec.redirect(ec.getRequestContextPath() +	 "/faces/condominio/menu.xhtml");
@@ -134,7 +130,7 @@ return"";
         	//si hizo login, verificamos que acceda a paginas permitidas:
         
     	//si hizo login, verificamos que acceda a paginas permitidas:
-    	if(login.getNombreRol().equals("Condominio")){ 
+		if (login.getNombreRol().equals("Condominio")) {
     		if(!path.contains("/condominio/"))
     	ec.redirect(ec.getRequestContextPath() +"/faces/condominio/menu.xhtml");
     	else
@@ -142,8 +138,9 @@ return"";
     	}else {
     		if(!path.contains("/tesorero/"))
     	    	ec.redirect(ec.getRequestContextPath() + "/faces/tesorero/menu.xhtml");
-    	    	else
-    	    	return;	
+    	    	else {
+    	     return;
+    	    	}
     	} 
     	
     	}
@@ -154,17 +151,7 @@ return"";
     	return;
     	}          
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
 	
 	
 	public String getCorreo() {
