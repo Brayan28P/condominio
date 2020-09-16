@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <f:metadata>
-<f:event listener="#{beanLogin.actionComprobarSessionLogin()}" type="preRenderView"></f:event>
+	<f:event listener="#{beanLogin.actionComprobarSessionLogin()}"
+		type="preRenderView"></f:event>
 </f:metadata>
 <ui:composition template="/WEB-INF/template/template_general.xhtml">
 
@@ -23,22 +24,25 @@
 
 				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">
 					<p:menuitem title="Bienvenido " icon="fa fa-user"
-						style="font-size: 16px;" value="Bienvenido" />
-					<p:menuitem title="Usuarios "
-						action="#{beanUsuario.actionRedireccionarUsuarios()}"
-						icon="fa fa-users" style="font-size: 16px;" value="Usuarios" />
-					<p:menuitem title="Roles " icon="fa fa-globe"
-						action="#{beanUsuario.actionRedireccionarRoles()}"
-						style="font-size: 16px;" value="Roles" />
+						style="font-size: 16px;" value="Bienvenido" />					
 					<p:menuitem title="Gastos" icon="fa fa-dollar"
 						action="#{beanUsuario.actionRedireccionarGastos()}"
 						style="font-size: 16px;" value="Gastos" />
+						<p:menuitem title="Pagos condominios" icon="fa fa-bar-chart"
+						action="#{beanUsuario.actionRedireccionarPagosTesorero()}"
+						style="font-size: 16px;" value="Pagos condominios" />
 					<p:menuitem title="Tipo Gastos" icon="fa fa-tint"
 						action="#{beanUsuario.actionRedireccionarTipoGastos()}"
 						style="font-size: 16px;" value="Tipo Gastos" />
 					<p:menuitem title="Tipo Pagos" icon="fa fa-building-o"
 						action="#{beanUsuario.actionRedireccionarTipoPagos()}"
 						style="font-size: 16px;" value="Tipo Pagos" />
+						<p:menuitem title="Usuarios "
+						action="#{beanUsuario.actionRedireccionarUsuarios()}"
+						icon="fa fa-users" style="font-size: 16px;" value="Usuarios" />
+					<p:menuitem title="Roles " icon="fa fa-globe"
+						action="#{beanUsuario.actionRedireccionarRoles()}"
+						style="font-size: 16px;" value="Roles" />					
 				</p:menubar> </nav>
 			</h:form>
 		</div>

@@ -143,6 +143,10 @@ public class BeanUsuario implements Serializable {
 	public String actionRedireccionarTipoPagos() {
 		return "tipopagos.xhtml?faces-redirect=true";
 	}
+	
+	public String actionRedireccionarPagosTesorero() {
+		return "pagostesorero.xhtml?faces-redirect=true";
+	}
 
 	public void actionRegistrarUsurio() {
 
