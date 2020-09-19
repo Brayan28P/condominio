@@ -12,8 +12,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name="pago_condomino")
-@NamedQuery(name="PagoCondomino.findAll", query="SELECT p FROM PagoCondomino p")
-public class PagoCondomino implements Serializable {
+@NamedQuery(name="PagoCondominio.findAll", query="SELECT p FROM PagoCondominio p")
+public class PagoCondominio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,7 +38,7 @@ public class PagoCondomino implements Serializable {
 	@JoinColumn(name="idusuario")
 	private Usuario usuario;
 
-	public PagoCondomino() {
+	public PagoCondominio() {
 	}
 
 	public long getIdpagoc() {

@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import condominio.core.model.entities.Gasto;
-import condominio.core.model.entities.PagoCondomino;
+import condominio.core.model.entities.PagoCondominio;
 import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.Usuario;
 import condominio.core.model.util.ModelUtil;
@@ -236,10 +236,10 @@ if (r==null) {
 	    }
 	 @SuppressWarnings("unchecked")
 		public boolean existeUsuarioenPagoCondominio(long idUsuario) {
-	      	Query q = em.createQuery("SELECT p FROM PagoCondomino p "
-	    			+ "where p.usuario.idusuario=?1", PagoCondomino.class);
+	      	Query q = em.createQuery("SELECT p FROM PagoCondominio p "
+	    			+ "where p.usuario.idusuario=?1", PagoCondominio.class);
 	      	q.setParameter(1, idUsuario);
-	      	List<PagoCondomino>listaPagos=new ArrayList<PagoCondomino>();
+	      	List<PagoCondominio>listaPagos=new ArrayList<PagoCondominio>();
 			listaPagos= q.getResultList(); 
 			if (listaPagos.isEmpty()) {
 				return false;

@@ -33,9 +33,9 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<Gasto> gastos;
 
-	//bi-directional many-to-one association to PagoCondomino
+	//bi-directional many-to-one association to PagoCondominio
 	@OneToMany(mappedBy="usuario")
-	private List<PagoCondomino> pagoCondominos;
+	private List<PagoCondominio> pagoCondominios;
 
 	//bi-directional many-to-one association to Rol
 	@ManyToOne
@@ -115,26 +115,26 @@ public class Usuario implements Serializable {
 		return gasto;
 	}
 
-	public List<PagoCondomino> getPagoCondominos() {
-		return this.pagoCondominos;
+	public List<PagoCondominio> getPagoCondominos() {
+		return this.pagoCondominios;
 	}
 
-	public void setPagoCondominos(List<PagoCondomino> pagoCondominos) {
-		this.pagoCondominos = pagoCondominos;
+	public void setPagoCondominos(List<PagoCondominio> pagoCondominios) {
+		this.pagoCondominios = pagoCondominios;
 	}
 
-	public PagoCondomino addPagoCondomino(PagoCondomino pagoCondomino) {
-		getPagoCondominos().add(pagoCondomino);
-		pagoCondomino.setUsuario(this);
+	public PagoCondominio addPagoCondomino(PagoCondominio pagoCondominio) {
+		getPagoCondominos().add(pagoCondominio);
+		pagoCondominio.setUsuario(this);
 
-		return pagoCondomino;
+		return pagoCondominio;
 	}
 
-	public PagoCondomino removePagoCondomino(PagoCondomino pagoCondomino) {
-		getPagoCondominos().remove(pagoCondomino);
-		pagoCondomino.setUsuario(null);
+	public PagoCondominio removePagoCondomino(PagoCondominio pagoCondominio) {
+		getPagoCondominos().remove(pagoCondominio);
+		pagoCondominio.setUsuario(null);
 
-		return pagoCondomino;
+		return pagoCondominio;
 	}
 
 	public Rol getRol() {

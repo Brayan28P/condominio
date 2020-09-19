@@ -22,9 +22,9 @@ public class TipoPago implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to PagoCondomino
+	//bi-directional many-to-one association to PagoCondominio
 	@OneToMany(mappedBy="tipoPago")
-	private List<PagoCondomino> pagoCondominos;
+	private List<PagoCondominio> pagoCondominios;
 
 	public TipoPago() {
 	}
@@ -45,26 +45,26 @@ public class TipoPago implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<PagoCondomino> getPagoCondominos() {
-		return this.pagoCondominos;
+	public List<PagoCondominio> getPagoCondominos() {
+		return this.pagoCondominios;
 	}
 
-	public void setPagoCondominos(List<PagoCondomino> pagoCondominos) {
-		this.pagoCondominos = pagoCondominos;
+	public void setPagoCondominos(List<PagoCondominio> pagoCondominios) {
+		this.pagoCondominios = pagoCondominios;
 	}
 
-	public PagoCondomino addPagoCondomino(PagoCondomino pagoCondomino) {
-		getPagoCondominos().add(pagoCondomino);
-		pagoCondomino.setTipoPago(this);
+	public PagoCondominio addPagoCondomino(PagoCondominio pagoCondominio) {
+		getPagoCondominos().add(pagoCondominio);
+		pagoCondominio.setTipoPago(this);
 
-		return pagoCondomino;
+		return pagoCondominio;
 	}
 
-	public PagoCondomino removePagoCondomino(PagoCondomino pagoCondomino) {
-		getPagoCondominos().remove(pagoCondomino);
-		pagoCondomino.setTipoPago(null);
+	public PagoCondominio removePagoCondomino(PagoCondominio pagoCondominio) {
+		getPagoCondominos().remove(pagoCondominio);
+		pagoCondominio.setTipoPago(null);
 
-		return pagoCondomino;
+		return pagoCondominio;
 	}
 
 }
