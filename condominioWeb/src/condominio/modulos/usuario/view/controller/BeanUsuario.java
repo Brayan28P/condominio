@@ -98,6 +98,7 @@ public class BeanUsuario implements Serializable {
 
 	public void actionListenerEditarUsuario() {
 		try {
+			managerUsuario.editarRol(editarRol);
 
 		} catch (Exception e) {
 			JSFUtil.crearMensajeError(e.getMessage());

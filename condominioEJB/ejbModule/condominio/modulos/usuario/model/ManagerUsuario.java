@@ -188,6 +188,27 @@ if (r==null) {
 }
 
 	}
+    /*
+    Metodo para editar Usuarios
+    */
+	 
+	public void  editarUsuarios(Usuario r , long idRolFk) throws Exception {
+if (r==null) {
+	throw new Exception("El objeto usuario no ha sido cargado correctamente.!");
+}else {
+	Usuario user= new Usuario();
+	user=findUsuarioById(r.getIdusuario());
+	if (user==null) {
+		em.merge(r);
+	}else {
+		if (user.getIdusuario()!=user.getIdusuario()) {
+			throw new Exception("Ya existe un nombre con ese rol.!");
+		}
+	}
+  
+}
+
+	}
 	
 	public void EliminarRol(long idRol) throws Exception {
 		if (idRol==0) {

@@ -190,5 +190,8 @@ return"";
 	public void setActivoLogin(boolean activoLogin) {
 		this.activoLogin = activoLogin;
 	}
+	public String getVerificarContrasenia() {
+		return verificarContrasenia;
+	}
 	
 }
