@@ -7,18 +7,18 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the pago_condomino database table.
+ * The persistent class for the pago_condominio database table.
  * 
  */
 @Entity
-@Table(name="pago_condomino")
+@Table(name="pago_condominio")
 @NamedQuery(name="PagoCondominio.findAll", query="SELECT p FROM PagoCondominio p")
 public class PagoCondominio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PAGO_CONDOMINO_IDPAGOC_GENERATOR", sequenceName="SEQ_PAGO_CONDOMINO",allocationSize = 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PAGO_CONDOMINO_IDPAGOC_GENERATOR")
+	@SequenceGenerator(name="PAGO_CONDOMINIO_IDPAGOC_GENERATOR", sequenceName="SEQ_PAGO_CONDOMINIO",allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PAGO_CONDOMINIO_IDPAGOC_GENERATOR")
 	private long idpagoc;
 
 	@Temporal(TemporalType.DATE)
