@@ -83,7 +83,8 @@
 						</p:column>
 						<p:column headerText="Verificado">
 							<h:outputText value="Verificado" rendered="#{g.valido == true}" />
-							<h:outputText value="No verificado" rendered="#{g.valido == false}" />
+							<h:outputText value="No verificado"
+								rendered="#{g.valido == false}" />
 						</p:column>
 						<p:column headerText="OPCIONES">
 							<p:commandButton icon="fa fa-pencil"
@@ -163,6 +164,15 @@
 							required="true" disabled="true" requiredMessage="Ingrese valor"
 							maxlength="100">
 						</p:inputText>
+						<p:outputLabel value="Selecione estado: " />
+						<p:selectOneMenu id="onecondominio" autoWidth="100%"
+							required="true" requiredMessage="Elija un estado"
+							value="#{beanPagosTesorero.validoE}" effect="fade" var="ro"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
+							<f:selectItem itemLabel="Verificado" itemValue="true" />
+							<f:selectItem itemLabel="No verfificado" itemValue="false" />
+						</p:selectOneMenu>
 						<p:outputLabel value="Seleccione tipo pago: " />
 						<p:selectOneMenu id="onegastoE" autoWidth="100%" required="true"
 							requiredMessage="Elija un tipo gasto"
@@ -173,31 +183,20 @@
 								itemLabel="#{t.nombre}" itemValue="#{t.idpago}" />
 						</p:selectOneMenu>
 						<p:outputLabel value="Seleccione condominio: " />
-							<p:selectOneMenu id="onecondominioE" autoWidth="100%"
-								required="true" requiredMessage="Elija un condominio"
-								value="#{beanPagosTesorero.idCondominiofkE}" effect="fade"
-								var="ro" filter="true" filterMatchMode="contains">
-								<f:selectItem itemLabel="Seleccione uno"
-									noSelectionOption="true" />
-								<f:selectItems value="#{beanCondominio.listaCondominio}" var="t"
-									itemLabel="#{t.nombres} #{t.apellidos}"
-									itemValue="#{t.idusuario}" />
-							</p:selectOneMenu>
+						<p:selectOneMenu id="onecondominioE" autoWidth="100%"
+							required="true" requiredMessage="Elija un condominio"
+							value="#{beanPagosTesorero.idCondominiofkE}" effect="fade"
+							var="ro" filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
+							<f:selectItems value="#{beanCondominio.listaCondominio}" var="t"
+								itemLabel="#{t.nombres} #{t.apellidos}"
+								itemValue="#{t.idusuario}" />
+						</p:selectOneMenu>
 						<p:outputLabel value="Valor" />
 						<p:inputText
 							value="#{beanPagosTesorero.editarPagoCondominio.valor}"
 							required="true" requiredMessage="Ingrese valor" maxlength="100">
 						</p:inputText>
-						<p:outputLabel value="Selecione estado: " />
-							<p:selectOneMenu id="onecondominio" autoWidth="100%"
-								required="true" requiredMessage="Elija un estado"
-								value="#{beanPagosTesorero.validoE}" effect="fade"
-								var="ro" filter="true" filterMatchMode="contains">
-								<f:selectItem itemLabel="Seleccione uno"
-									noSelectionOption="true" />
-									 <f:selectItem itemLabel="Verificado" itemValue="true" />
-									  <f:selectItem itemLabel="No verfificado" itemValue="false" />
-							</p:selectOneMenu>
 					</p:panelGrid>
 					<p:panelGrid columns="2" layout="grid">
 						<p:commandButton value="EDITAR" icon="fa fa-arrow-circle-right"

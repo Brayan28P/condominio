@@ -1,5 +1,6 @@
 package condominio.modulos.tesorero.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import condominio.core.model.entities.Gasto;
+import condominio.core.model.entities.PagoCondominio;
 import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.TipoGasto;
 import condominio.core.model.entities.TipoPago;
@@ -96,7 +98,8 @@ public class ManagerTesorero {
 			}
 		}
 	}
-
+	
+	
 	/**
 	 * Lista de tipo de gastos
 	 * 
@@ -198,6 +201,10 @@ public class ManagerTesorero {
 			if (g == null) {
 				throw new Exception("No se ha encontrado tipo gasto");
 			} else {
+				boolean existeTipoGastoengasto = existeTipoGastoenGasto(idGasto);
+				if (existeTipoGastoengasto) {
+					throw new Exception("El tipo gasto no puede ser eliminado se encuentra utilizado en Gastos");
+				} else
 				em.remove(g);
 			}
 		}
@@ -304,8 +311,36 @@ public class ManagerTesorero {
 			if (g == null) {
 				throw new Exception("No se ha encontrado tipo pago");
 			} else {
+				boolean existeTipoPagoengasto = existeTipoPagoenGasto(idPago);
+				if (existeTipoPagoengasto) {
+					throw new Exception("El tipo pago no puede ser eliminado se encuentra utilizado en Pagos condominio.");
+				} else
 				em.remove(g);
 			}
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean existeTipoGastoenGasto(long idGasto) {
+		Query q = em.createQuery("SELECT g FROM Gasto g " + "where g.tipoGasto.idgasto=?1", Gasto.class);
+		q.setParameter(1, idGasto);
+		List<Gasto> listaGastos = new ArrayList<Gasto>();
+		listaGastos = q.getResultList();
+		if (listaGastos.isEmpty()) {
+			return false;
+		} else
+			return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean existeTipoPagoenGasto(long idPago) {
+		Query q = em.createQuery("SELECT g FROM PagoCondominio g " + "where g.tipoPago.idpago=?1", PagoCondominio.class);
+		q.setParameter(1, idPago);
+		List<PagoCondominio> lista = new ArrayList<PagoCondominio>();
+		lista = q.getResultList();
+		if (lista.isEmpty()) {
+			return false;
+		} else
+			return true;
 	}
 }
