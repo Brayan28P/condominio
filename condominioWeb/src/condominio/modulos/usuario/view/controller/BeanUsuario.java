@@ -98,9 +98,11 @@ public class BeanUsuario implements Serializable {
 
 	public void actionListenerEditarUsuario() {
 		try {
-			managerUsuario.editarRol(editarRol);
-
+			managerUsuario.editarUsuarios(editarUsuario, idrolfkE);
+listaUsuarios=managerUsuario.findAllUsuarios();
+JSFUtil.crearMensajeInfo("Usuario editado correctamente");
 		} catch (Exception e) {
+			listaUsuarios=managerUsuario.findAllUsuarios();
 			JSFUtil.crearMensajeError(e.getMessage());
 		}
 	}
