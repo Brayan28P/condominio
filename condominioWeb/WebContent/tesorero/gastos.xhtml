@@ -26,6 +26,9 @@
 					<p:menuitem title="Ingresar nuevo gasto"
 						onclick="PF('nuevoGasto').show();" icon="fa fa-plus"
 						style="font-size: 16px;" value="Nuevo Gasto" />
+					<p:menuitem title="Tipo Gastos" icon="fa fa-tint"
+						action="#{beanUsuario.actionRedireccionarTipoGastos()}"
+						style="font-size: 16px;" value="Tipo Gastos" />
 				</p:menubar> </nav>
 			</h:form>
 		</div>
@@ -148,8 +151,9 @@
 				<div class="ui-fluid">
 					<p:panelGrid columns="1" layout="grid">
 						<p:outputLabel value="Valor" />
-						<p:inputText value="#{beanTesorero.editarGasto.idgastoc}" required="true" disabled="true"
-							requiredMessage="Ingrese valor" maxlength="100">
+						<p:inputText value="#{beanTesorero.editarGasto.idgastoc}"
+							required="true" disabled="true" requiredMessage="Ingrese valor"
+							maxlength="100">
 						</p:inputText>
 						<p:outputLabel value="Seleccione tipo gasto: " />
 						<p:selectOneMenu id="onegasto" autoWidth="100%" required="true"
@@ -166,12 +170,12 @@
 							maxlength="100">
 						</p:inputText>
 						<p:outputLabel value="Valor" />
-						<p:inputText value="#{beanTesorero.editarGasto.valor}" required="true"
-							requiredMessage="Ingrese valor" maxlength="100">
+						<p:inputText value="#{beanTesorero.editarGasto.valor}"
+							required="true" requiredMessage="Ingrese valor" maxlength="100">
 						</p:inputText>
 					</p:panelGrid>
 					<p:panelGrid columns="2" layout="grid">
-						<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+						<p:commandButton value="EDITAR" icon="fa fa-arrow-circle-right"
 							style="width:100%"
 							actionListener="#{beanTesorero.actionListenerEditarGasto()}"
 							oncomplete="nuevoRol" update="@form" ajax="false">

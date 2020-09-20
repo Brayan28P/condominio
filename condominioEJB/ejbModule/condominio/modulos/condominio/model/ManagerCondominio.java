@@ -31,7 +31,7 @@ public class ManagerCondominio {
 	 */
 	@SuppressWarnings("unchecked")
     public List<Usuario> findAllCondominos() {
-		Query q = em.createQuery("SELECT r FROM Usuario r order by r.nombres", Usuario.class);
+		Query q = em.createQuery("SELECT r FROM Usuario r where r.rol.nombre='Condominio' order by r.nombres asc", Usuario.class);
 		List<Usuario> lista = q.getResultList();
 		return lista;
 	}

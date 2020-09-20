@@ -32,6 +32,8 @@ public class BeanPagosTesorero implements Serializable {
 	private long idtPagofk;
 	private long idtPagofkE;
 	private long idCondominiofk;
+	private long idCondominiofkE;
+	private boolean validoE;
 	@EJB
 	ManagerPagoTesorero managerPagoTesorero;
 	@EJB
@@ -55,6 +57,8 @@ public class BeanPagosTesorero implements Serializable {
 	public void actionListenerCargarPagoCondomino(PagoCondominio g) {
 		editarPagoCondominio = g;
 		idtPagofkE=g.getTipoPago().getIdpago();
+		validoE=g.getValido();
+		idCondominiofkE=g.getUsuario().getIdusuario();
 	}
 
 	public void actionListenerIngresarPagoCondomino() {
@@ -82,10 +86,11 @@ public class BeanPagosTesorero implements Serializable {
 		try {
 			TipoPago tipoPagoCondomino = managerTesorero.findTipoPagoById(idtPagofkE);
 			Date fechatransaccion = new Date();
-			Usuario usuario = managerUsuario.findUsuarioById(beanLogin.getLogin().getIdUsuario());
+			Usuario usuario = managerUsuario.findUsuarioById(idCondominiofkE);
 			editarPagoCondominio.setTipoPago(tipoPagoCondomino);
 			editarPagoCondominio.setFechatransaccion(fechatransaccion);
 			editarPagoCondominio.setUsuario(usuario);
+			editarPagoCondominio.setValido(validoE);
 			managerPagoTesorero.editarPagoCondomino(editarPagoCondominio);
 			listaPagoCondominos = managerPagoTesorero.findAllPagoCondominos();
 			JSFUtil.crearMensajeInfo("Pago condomino editado correctamente.!");
@@ -152,6 +157,22 @@ public class BeanPagosTesorero implements Serializable {
 
 	public void setIdCondominiofk(long idCondominiofk) {
 		this.idCondominiofk = idCondominiofk;
+	}
+
+	public long getIdCondominiofkE() {
+		return idCondominiofkE;
+	}
+
+	public void setIdCondominiofkE(long idCondominiofkE) {
+		this.idCondominiofkE = idCondominiofkE;
+	}
+
+	public boolean isValidoE() {
+		return validoE;
+	}
+
+	public void setValidoE(boolean validoE) {
+		this.validoE = validoE;
 	}
 
 	

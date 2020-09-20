@@ -87,7 +87,7 @@ public class ManagerPagoTesorero {
 			PagoCondominio g = new PagoCondominio();
 			g = findPagoCondominoById(idPagoCondomino);
 			if (g == null) {
-				throw new Exception("No se ha encontrado PagoCondominio");
+				throw new Exception("No se ha encontrado pago condominio");
 			} else {
 				em.remove(g);
 			}
