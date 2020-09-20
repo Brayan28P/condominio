@@ -22,9 +22,14 @@
 					style="background-color: #E4E5E5; margin-top:66px; z-index:1000">
 
 				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">
-					<p:menuitem title="Ingresar nuevo pago"
-						onclick="PF('nuevoGasto').show();" icon="fa fa-plus"
-						style="font-size: 16px;" value="Nuevo Pago" />
+					<p:menuitem title="Bienvenido " icon="fa fa-user"
+						style="font-size: 16px;" value="Bienvenido" />
+					<p:menuitem title="Usuarios "
+						action="#{beanUsuario.actionRedireccionarUsuarios()}"
+						icon="fa fa-users" style="font-size: 16px;" value="Usuarios" />
+					<p:menuitem title="Roles " icon="fa fa-globe"
+						action="#{beanUsuario.actionRedireccionarRoles()}"
+						style="font-size: 16px;" value="Roles" />
 				</p:menubar> </nav>
 			</h:form>
 		</div>
@@ -34,13 +39,10 @@
 			<nav class="navbar navbar-expand-lg fixed-top labelBorder"
 				style="margin-top:105px; z-index:100">
 			<ol class="breadcrumb w-100" style="background-color: white">
-				<li class="breadcrumb-item" style="font-size: 14px;"><a
-					href="menu.xhtml"><i class="fa fa-home" />&nbsp;Inicio</a></li>
-				<li class="breadcrumb-item active" style="font-size: 14px;">Gastos</li>
+				<li class="breadcrumb-item active" style="font-size: 14px;">Menú</li>
 			</ol>
 			</nav>
 		</div>
-
 
 		<div id="mensajes" class="container-fluid col-lg-12"
 			style="margin-top: 150px;">
@@ -52,135 +54,7 @@
 			</p:growl>
 		</div>
 
-		<div class="container-fluid col-lg-12">
-
-			<h:form id="form2">
-				<div class="ui-fluid">
-					<p:dataTable var="g"
-						value="#{beanCondominio.listaPagoCondominos}" reflow="true"
-						style="margin-top:20px">
-						<f:facet name="header">
-              LISTA DE PAGOS CONDOMINIOS
-            </f:facet>
-						<p:column headerText="Id">
-							<h:outputText value="#{g.idpagoc}" />
-						</p:column>
-
-						<p:column headerText="Tipo Gasto">
-							<h:outputText value="#{g.tipoPago.nombre}" />
-						</p:column>
-						<p:column headerText="Valor">
-							<h:outputText value="#{g.valor}" />
-						</p:column>
-						<p:column headerText="Fecha">
-							<h:outputText value="#{g.fechatransaccion}" />
-						</p:column>
-						<p:column headerText="Verificado">
-							<h:outputText value="Verificado" rendered="#{g.valido == true}" />
-							<h:outputText value="No verificado" rendered="#{g.valido == false}" />
-						</p:column>
-						<p:column headerText="OPCIONES">
-							<p:commandButton icon="fa fa-pencil"
-								actionListener="#{beanCondominio.actionListenerCargarPagoCondomino(g)}"
-								update="form10" onclick="PF('editarPagoCondominio').show();"
-								title="Editar"></p:commandButton>
-
-							<p:commandButton update="@form"
-								actionListener="#{beanCondominio.actionListenerEliminarPagoCondomino(g.idpagoc)}"
-								style="border:#FC1F0D;background-color:#FC1F0D" title="Eliminar"
-								icon="fa fa-times">
-								<p:confirm header="Confirmación" message="Desea eliminar?"
-									icon="fa fa-times" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-				</div>
-
-			</h:form>
-			<p:dialog header="Ingresar nuevo pago" widgetVar="nuevoGasto"
-				id="nuevoGasto" modal="true" height="300" resizable="true"
-				responsive="true" minimizable="true" maximizable="true"
-				appendTo="@(body)">
-				<h:form id="form1">
-					<div class="ui-fluid">
-						<p:panelGrid columns="1" layout="grid">
-							<p:outputLabel value="Seleccione tipo pago: " />
-							<p:selectOneMenu id="onepago" autoWidth="100%" required="true"
-								requiredMessage="Elija un tipo pago"
-								value="#{beanCondominio.idtPagofk}" effect="fade" var="ro"
-								filter="true" filterMatchMode="contains">
-								<f:selectItem itemLabel="Seleccione uno"
-									noSelectionOption="true" />
-								<f:selectItems value="#{beanTipoPago.listaTipoPagos}" var="t"
-									itemLabel="#{t.nombre}" itemValue="#{t.idpago}" />
-							</p:selectOneMenu>
-							<p:outputLabel value="Valor" />
-							<p:inputText value="#{beanCondominio.pagoCondominio.valor}"
-								required="true" requiredMessage="Ingrese valor" maxlength="100">
-							</p:inputText>
-						</p:panelGrid>
-						<p:panelGrid columns="2" layout="grid">
-							<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
-								style="width:100%"
-								actionListener="#{beanCondominio.actionListenerIngresarPagoCondomino()}"
-								oncomplete="nuevoGasto" update="@form" ajax="false">
-							</p:commandButton>
-							<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
-								dismiss="modal" />
-						</p:panelGrid>
-					</div>
-				</h:form>
-			</p:dialog>
-
-		</div>
-		<p:dialog header="Editar gasto" widgetVar="editarPagoCondominio"
-			id="editarPagoCondominio" modal="true" height="300" resizable="true"
-			responsive="true" minimizable="true" maximizable="true"
-			appendTo="@(body)">
-			<h:form id="form10">
-				<div class="ui-fluid">
-					<p:panelGrid columns="1" layout="grid">
-						<p:outputLabel value="Valor" />
-						<p:inputText
-							value="#{beanCondominio.editarPagoCondominio.idpagoc}"
-							required="true" disabled="true" requiredMessage="Ingrese valor"
-							maxlength="100">
-						</p:inputText>
-						<p:outputLabel value="Seleccione tipo pago: " />
-						<p:selectOneMenu id="onegastoE" autoWidth="100%" required="true"
-							requiredMessage="Elija un tipo gasto"
-							value="#{beanCondominio.idtPagofkE}" effect="fade" var="ro"
-							filter="true" filterMatchMode="contains">
-							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
-							<f:selectItems value="#{beanTipoPago.listaTipoPagos}" var="t"
-								itemLabel="#{t.nombre}" itemValue="#{t.idpago}" />
-						</p:selectOneMenu>
-						<p:outputLabel value="Valor" />
-						<p:inputText
-							value="#{beanCondominio.editarPagoCondominio.valor}"
-							required="true" requiredMessage="Ingrese valor" maxlength="100">
-						</p:inputText>
-					</p:panelGrid>
-					<p:panelGrid columns="2" layout="grid">
-						<p:commandButton value="EDITAR" icon="fa fa-arrow-circle-right"
-							style="width:100%"
-							actionListener="#{beanCondominio.actionListenerEditarPagoCondominio()}"
-							oncomplete="nuevoRol" update="@form" ajax="false">
-						</p:commandButton>
-						<p:button value="CANCELAR" style="width:100%" icon="fa fa-times"
-							dismiss="modal" />
-					</p:panelGrid>
-				</div>
-			</h:form>
-		</p:dialog>
-		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-			<p:commandButton value="Sí" type="button"
-				styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-			<p:commandButton value="No" type="button"
-				styleClass="ui-confirmdialog-no" icon="fa fa-times" />
-		</p:confirmDialog>
 	</ui:define>
-
 </ui:composition>
 
 </html>
