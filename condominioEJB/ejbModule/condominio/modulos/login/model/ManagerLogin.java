@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import condominio.core.model.entities.Usuario;
+import condominio.core.model.util.ModelUtil; 
 
 /**
  * Session Bean implementation class ManagerLogin
@@ -35,10 +36,24 @@ public class ManagerLogin {
     	login.setNombres(usuario.getApellidos()+" "+usuario.getNombres());
     	login.setNombreRol(usuario.getRol().getNombre());
     	login.setActivo(true);
+    	login.setCedula(usuario.getCedula());
     	}
     	return login;
     	
     }
+    public boolean verificarTesoreroisNuevo(String contrasenia,String cedula) throws Exception {
+if (ModelUtil.isEmpty(contrasenia)||ModelUtil.isEmpty(cedula)) {
+	return false;
+}else {
+	if (contrasenia.equals(cedula)) {
+return true;		
+	}else {
+		return false;
+	}
+}
+    	
+    }
+  
 	@SuppressWarnings("unchecked")
 	public List<Usuario> existeUsuario(String correo,String contrasenia){
 		String JPQL = "SELECT u FROM Usuario u WHERE u.email=?1 and u.contrasenia=?2";

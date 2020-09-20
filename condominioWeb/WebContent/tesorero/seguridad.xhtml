@@ -8,13 +8,7 @@
 <f:event listener="#{beanLogin.actionComprobarSessionLogin()}" type="preRenderView"></f:event>
 </f:metadata>
 <ui:composition template="/WEB-INF/template/template_general.xhtml">
-<script type="text/javascript">
-   function deshabilitaRetroceso(){
-    window.location.hash="no-back-button";
-    window.location.hash="Again-No-back-button" //chrome
-    window.onhashchange=function(){window.location.hash="no-back-button";}
-}
-</script>
+
 	<ui:define name="head">
 		<link rel="icon" type="image/png"
 			href="../resources/images/logoTitle.png" />
@@ -56,7 +50,7 @@
 			</p:growl>
 		</div>
 		<div class="ui-fluid" align="center">
-<h:form id="loginForm">
+<h:form id="loginForm" rendered="#{beanLogin.inseguro}">
 		<p:growl id="msg" showDetail="true" life="4000" />
 		<p:panel id="loginPnl" header="Cambio de contraseña" 
 			style="width: 350px; margin: 0 auto;">
@@ -105,7 +99,7 @@
 			</h:panelGrid>
 			<h:panelGrid columns="1" cellpadding="10" width="100%">
 				<p:commandButton id="loginButton"  
-					value="Login" update="loginForm" ajax="true" style="float: right;">
+					value="Restablecer" update="loginForm" ajax="true" style="float: right;">
 				</p:commandButton>
 			</h:panelGrid>
 		</p:panel>

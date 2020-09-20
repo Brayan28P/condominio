@@ -64,12 +64,20 @@ public class ManagerUsuario {
 		}
 		if (!ModelUtil.validarCedula(u.getCedula())) {
 			throw new Exception("La cédula es incorrecta ingrese una válida porfavor");
-		}
-
+		} 
 		Rol r = new Rol();
 		r = findRoByNombre("Condominio");
 		Usuario user = new Usuario();
 		user = u;
+		boolean existeCedula,existeCorreo;
+		existeCedula=findUsuarioByCedula(u.getCedula());
+		existeCorreo=findUsuarioByCorreo(u.getEmail());
+		if (existeCedula) {
+			throw new Exception("La cédula ya está registrada con otro usuario");
+		}
+		if (existeCorreo) {
+			throw new Exception("El correo ya se encuentra registrado con otro usuario");
+		}
 		u.setRol(r);
 		em.persist(user);
 		LoginDto login = new LoginDto();
@@ -113,7 +121,19 @@ public class ManagerUsuario {
 			} else {
 				Rol r = findRolnById(id_rol_fk);
 				Usuario usuario = new Usuario();
-				usuario = u;
+				usuario = u; 
+				boolean existeCedula,existeCorreo;
+				existeCedula=findUsuarioByCedula(u.getCedula());
+				existeCorreo=findUsuarioByCorreo(u.getEmail());
+				if (ModelUtil.validarCedula(usuario.getCedula())) {
+					throw new Exception("La cédula es incorrecta");
+				}
+				if (existeCedula) {
+					throw new Exception("La cédula ya está registrada con otro usuario");
+				}
+				if (existeCorreo) {
+					throw new Exception("El correo ya se encuentra registrado con otro usuario");
+				}
 				usuario.setRol(r);
 
 				em.persist(usuario);
