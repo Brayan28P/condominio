@@ -30,7 +30,7 @@ public class ManagerPagoTesorero {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PagoCondominio> findAllPagoCondominos() {
-		Query q = em.createQuery("SELECT r FROM PagoCondominio r order by r.idpagoc asc", PagoCondominio.class);
+		Query q = em.createQuery("SELECT r FROM PagoCondominio r order by r.fechatransaccion desc", PagoCondominio.class);
 		List<PagoCondominio> lista = q.getResultList();
 		return lista;
 	}

@@ -33,7 +33,7 @@ public class ManagerTesorero {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Gasto> findAllGastos() {
-		Query q = em.createQuery("SELECT r FROM Gasto r order by r.idgastoc asc", Gasto.class);
+		Query q = em.createQuery("SELECT r FROM Gasto r order by r.fechatransaccion desc", Gasto.class);
 		List<Gasto> lista = q.getResultList();
 		return lista;
 	}
