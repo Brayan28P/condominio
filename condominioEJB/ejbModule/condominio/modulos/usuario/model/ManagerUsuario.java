@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import condominio.core.model.entities.Gasto;
-import condominio.core.model.entities.PagoCondomino;
+import condominio.core.model.entities.PagoCondominio;
 import condominio.core.model.entities.Rol;
 import condominio.core.model.entities.Usuario;
 import condominio.core.model.util.ModelUtil;
@@ -25,238 +25,331 @@ public class ManagerUsuario {
 	@PersistenceContext
 	private EntityManager em;
 
-    public ManagerUsuario() {
+	public ManagerUsuario() {
 
+	}
 
-    }
-    public boolean verificarContrasenias(String contrasenia1,String contrasenia2) throws Exception {
-    	if (ModelUtil.isEmpty(contrasenia1)) {
-    		throw new Exception("No ha ingresado la contraseña 1");
+	public boolean verificarContrasenias(String contrasenia1, String contrasenia2) throws Exception {
+		if (ModelUtil.isEmpty(contrasenia1)) {
+			throw new Exception("No ha ingresado la contraseña 1");
 		}
-    	if (ModelUtil.isEmpty(contrasenia2)) {
-    		throw new Exception("No ha ingresado la contraseña 2");
+		if (ModelUtil.isEmpty(contrasenia2)) {
+			throw new Exception("No ha ingresado la contraseña 2");
 		}
-    	if (!contrasenia1.equals(contrasenia2)) {
-    		throw new Exception("La contraseñas no coinciden");
-		}else return true;
-    	
-    }
-    
-    /*
-     Metodo para que se registren los usuarios manualmente
-     */
-    public LoginDto registrarUsuario(Usuario u) throws Exception {
-    	if (ModelUtil.isEmpty(u.getNombres())) {
-    		throw new Exception("No ha ingresado los nombres");
+		if (!contrasenia1.equals(contrasenia2)) {
+			throw new Exception("La contraseñas no coinciden");
+		} else
+			return true;
+
+	}
+
+	/*
+	 * Metodo para que se registren los usuarios manualmente
+	 */
+	public LoginDto registrarUsuario(Usuario u) throws Exception {
+		if (ModelUtil.isEmpty(u.getNombres())) {
+			throw new Exception("No ha ingresado los nombres");
 		}
-    	if (ModelUtil.isEmpty(u.getApellidos())) {
-    		throw new Exception("No ha ingresado los apellidos");
+		if (ModelUtil.isEmpty(u.getApellidos())) {
+			throw new Exception("No ha ingresado los apellidos");
 		}
-    	if (ModelUtil.isEmpty(u.getEmail())) {
-    		throw new Exception("No ha ingresado el email");
+		if (ModelUtil.isEmpty(u.getEmail())) {
+			throw new Exception("No ha ingresado el email");
 		}
-    	if (ModelUtil.isEmpty(u.getContrasenia())) {
-    		throw new Exception("No ha ingresado la contraseña");
+		if (ModelUtil.isEmpty(u.getContrasenia())) {
+			throw new Exception("No ha ingresado la contraseña");
 		}
-    	if (ModelUtil.isEmpty(u.getCedula())) {
-    		throw new Exception("No ha ingresado la cédula");
+		if (ModelUtil.isEmpty(u.getCedula())) {
+			throw new Exception("No ha ingresado la cédula");
 		}
-    	if (!ModelUtil.validarCedula(u.getCedula())) {
-    		throw new Exception("La cédula es incorrecta ingrese una válida porfavor");
+		if (!ModelUtil.validarCedula(u.getCedula())) {
+			throw new Exception("La cédula es incorrecta ingrese una válida porfavor");
+		} 
+		Rol r = new Rol();
+		r = findRoByNombre("Condominio");
+		Usuario user = new Usuario();
+		user = u;
+		boolean existeCedula,existeCorreo;
+		existeCedula=findUsuarioByCedula(u.getCedula());
+		existeCorreo=findUsuarioByCorreo(u.getEmail());
+		if (existeCedula) {
+			throw new Exception("La cédula ya está registrada con otro usuario");
 		}
-    	
-    	Rol r=new Rol();
-    	r=findRoByNombre("Condominio");
-				Usuario user=new Usuario();
-				user=u;
-				u.setRol(r);	
-				em.persist(user);
-				LoginDto login=new LoginDto();
-				login.setNombreRol(r.getNombre());
-				login.setIdUsuario(user.getIdusuario());
-				login.setNombres(user.getNombres()+" "+user.getApellidos());
-				login.setCedula(user.getCedula());
-			    login.setActivo(true);
-		 return login;
-    }
-    /*
-  Metodo para registrar los roles
-    */
-    public void ingresarRol(Rol r) throws Exception {
-      	if (r!=null) {
-      	Rol nrol=findRoByNombre(r.getNombre());
-      	if (nrol!=null) {
-      		System.out.println(".. "+nrol.getIdrol());
-      		throw new Exception("El rol "+r.getNombre()+" ya existe.");
-		}else {
-      		Rol rol=new Rol();
-			rol=r;
-			em.persist(rol);
+		if (existeCorreo) {
+			throw new Exception("El correo ya se encuentra registrado con otro usuario");
 		}
-		}else {
+		u.setRol(r);
+		em.persist(user);
+		LoginDto login = new LoginDto();
+		login.setNombreRol(r.getNombre());
+		login.setIdUsuario(user.getIdusuario());
+		login.setNombres(user.getNombres() + " " + user.getApellidos());
+		login.setCedula(user.getCedula());
+		login.setActivo(true);
+		return login;
+	}
+
+	/*
+	 * Metodo para registrar los roles
+	 */
+	public void ingresarRol(Rol r) throws Exception {
+		if (r != null) {
+			Rol nrol = findRoByNombre(r.getNombre());
+			if (nrol != null) {
+				System.out.println(".. " + nrol.getIdrol());
+				throw new Exception("El rol " + r.getNombre() + " ya existe.");
+			} else {
+				Rol rol = new Rol();
+				rol = r;
+				em.persist(rol);
+			}
+		} else {
 			throw new Exception("El objeto rol no ha sido cargado correctamente.!");
 		}
-    }
-    /*
-  Metodo para registrar los roles
-    */
-    public void ingresarUsuario(Usuario u, long id_rol_fk) throws Exception {
-      	if (u==null) {
+	}
 
-      		throw new Exception("El objeto rol no ha sido cargado correctamente.!");
-		}else {
+	/*
+	 * Metodo para registrar los roles
+	 */
+	public void ingresarUsuario(Usuario u, long id_rol_fk) throws Exception {
+		if (u == null) {
+
+			throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+		} else {
 			if (ModelUtil.isEmptyNumber(id_rol_fk)) {
-		   		throw new Exception("El objeto rol no ha sido cargado correctamente.!");
-			}else {
-				Rol r=findRolnById(id_rol_fk);
-      		Usuario usuario=new Usuario();
-			usuario=u;
-			usuario.setRol(r);
- 
-			em.persist(usuario);
+				throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+			} else {
+				Rol r = findRolnById(id_rol_fk);
+				Usuario usuario = new Usuario();
+				usuario = u; 
+				boolean existeCedula,existeCorreo;
+				existeCedula=findUsuarioByCedula(u.getCedula());
+				existeCorreo=findUsuarioByCorreo(u.getEmail());
+				if (ModelUtil.validarCedula(usuario.getCedula())) {
+					throw new Exception("La cédula es incorrecta");
+				}
+				if (existeCedula) {
+					throw new Exception("La cédula ya está registrada con otro usuario");
+				}
+				if (existeCorreo) {
+					throw new Exception("El correo ya se encuentra registrado con otro usuario");
+				}
+				usuario.setRol(r);
+
+				em.persist(usuario);
 			}
 		}
-    }
-    /*
-    Metodo para encontrar un rol por el ID  o PK 
-    */
-    public Rol findRolnById(long idrol) {
-    	Rol rol= em.find(Rol.class, idrol);
+	}
+
+	/*
+	 * Metodo para encontrar un rol por el ID o PK
+	 */
+	public Rol findRolnById(long idrol) {
+		Rol rol = em.find(Rol.class, idrol);
 		return rol;
 	}
-    /*
-    Metodo para encontrar un rol por el ID  o PK 
-    */
-    public Usuario findUsuarioById(long idUsuario) {
-    	Usuario u= em.find(Usuario.class, idUsuario);
+
+	/*
+	 * Metodo para encontrar un rol por el ID o PK
+	 */
+	public Usuario findUsuarioById(long idUsuario) {
+		Usuario u = em.find(Usuario.class, idUsuario);
 		return u;
 	}
-    /*
-    Metodo para encontrar la lista de roles
-    */
+
+	/*
+	 * Metodo para encontrar la lista de roles
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Rol> findAllRoles() {
 		Query q = em.createQuery("SELECT r FROM Rol r order by r.idrol asc", Rol.class);
 		List<Rol> listaRoles = q.getResultList();
 		return listaRoles;
 	}
-    /*
-    Metodo para encontrar la lista de roles
-    */
+
+	/*
+	 * Metodo para encontrar la lista de roles
+	 */
 	@SuppressWarnings("unchecked")
-	public  Rol findRoByNombre(String nombreRol) {
-		Query q = em.createQuery("SELECT r FROM Rol r "
-				+ " where r.nombre=?1", Rol.class);
+	public Rol findRoByNombre(String nombreRol) {
+		Query q = em.createQuery("SELECT r FROM Rol r " + " where r.nombre=?1", Rol.class);
 		q.setParameter(1, nombreRol);
-		Rol r=new Rol();
+		Rol r = new Rol();
 		List<Rol> listaRoles = q.getResultList();
-	if (listaRoles.isEmpty()) {
-		return null;
-	}else {
-		r=listaRoles.get(0);
-		return r;
+		if (listaRoles.isEmpty()) {
+			return null;
+		} else {
+			r = listaRoles.get(0);
+			return r;
+		}
+
 	}
-		 
+
+	/*
+	 * Metodo para encontrar la lista de roles
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean findUsuarioByCorreo(String correo) {
+		Query q = em.createQuery("SELECT u FROM Usuario u " + " where u.email=?1", Usuario.class);
+		q.setParameter(1, correo);
+		List<Usuario> listaUsuarios = q.getResultList();
+		if (listaUsuarios.isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+
 	}
-    /*
-    Metodo para encontrar la lista de usuarios
-    */
+
+	/*
+	 * Metodo para encontrar usuario by cedula
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean findUsuarioByCedula(String cedula) {
+		Query q = em.createQuery("SELECT u FROM Usuario u " + " where u.cedula=?1", Usuario.class);
+		q.setParameter(1, cedula);
+		List<Usuario> listaUsuarios = q.getResultList();
+		if (listaUsuarios.isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	/*
+	 * Metodo para encontrar la lista de usuarios
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Usuario> findAllUsuarios() {
 		Query q = em.createQuery("SELECT u FROM Usuario u ", Usuario.class);
-		List<Usuario> listaUsuarios= q.getResultList();
+		List<Usuario> listaUsuarios = q.getResultList();
 		return listaUsuarios;
 	}
-    /*
-    Metodo para editar Roles
-    */
-	 
-	public void  editarRol(Rol r) throws Exception {
-if (r==null) {
-	throw new Exception("El objeto rol no ha sido cargado correctamente.!");
-}else {
-	Rol rol= new Rol();
-	rol=findRoByNombre(r.getNombre());
-	if (rol==null) {
-		em.merge(r);
-	}else {
-		if (r.getIdrol()!=rol.getIdrol()) {
-			throw new Exception("Ya existe un nombre con ese rol.!");
+	/*
+	 * Metodo para editar Roles
+	 */
+
+	public void editarRol(Rol r) throws Exception {
+		if (r == null) {
+			throw new Exception("El objeto rol no ha sido cargado correctamente.!");
+		} else {
+			Rol rol = new Rol();
+			rol = findRoByNombre(r.getNombre());
+			if (rol == null) {
+				em.merge(r);
+			} else {
+				if (r.getIdrol() != rol.getIdrol()) {
+					throw new Exception("Ya existe un nombre con ese rol.!");
+				}
+			}
+
 		}
-	}
-  
-}
 
 	}
-	
+	/*
+	 * Metodo para editar Usuarios
+	 */
+
+	public void editarUsuarios(Usuario r, long idRolFk) throws Exception {
+		if (r == null)
+			throw new Exception("El objeto usuario no ha sido cargado correctamente.!");
+		if (idRolFk == 0)
+			throw new Exception("El rol no ha sido cargado correctamente");
+		Usuario u = findUsuarioById(r.getIdusuario());
+		boolean existeCedUsuario, existeCorrUsuario;
+		existeCedUsuario = findUsuarioByCedula(r.getCedula());
+		existeCorrUsuario = findUsuarioByCorreo(r.getEmail());
+		if (!r.getCedula().equals(u.getCedula())) {
+			if (existeCedUsuario) {
+				throw new Exception("La cédula ya se encuentra registrado con otro usuario");
+			}
+		}
+		if (!r.getEmail().equals(u.getEmail())) {
+			if (existeCorrUsuario) {
+				throw new Exception("El correo ya se encuentra registrado en otro usuario");
+			}
+		}
+
+		Rol rol = new Rol();
+		rol = findRolnById(idRolFk);
+		u.setApellidos(r.getApellidos());
+		u.setCedula(r.getCedula());
+		u.setNombres(r.getNombres());
+		u.setRol(rol);
+
+	}
+
 	public void EliminarRol(long idRol) throws Exception {
-		if (idRol==0) {
+		if (idRol == 0) {
 			throw new Exception("El rol no existe vuelva a intentarlo");
-		}else {
-			Rol r=new Rol();
-			r=findRolnById(idRol);
-			 boolean existeRolenUser=existeRolenUsuario(idRol);
-			 if (existeRolenUser) {
-				 throw new Exception("El rol no puede ser eliminado se encuentra utilizado en la entidad usuario");	
-			}else
+		} else {
+			Rol r = new Rol();
+			r = findRolnById(idRol);
+			boolean existeRolenUser = existeRolenUsuario(idRol);
+			if (existeRolenUser) {
+				throw new Exception("El rol no puede ser eliminado se encuentra utilizado en la entidad usuario");
+			} else
 				em.remove(r);
 		}
 	}
+
 	public void EliminarUsuario(long idUsuario) throws Exception {
-		if (idUsuario==0) {
+		if (idUsuario == 0) {
 			throw new Exception("El usuario no existe vuelva a intentarlo");
-		}else {
-			Usuario user=new Usuario();
-			user=findUsuarioById(idUsuario);
-			 boolean existeUserenPago=existeUsuarioenPagoCondominio(idUsuario);
-			 if (existeUserenPago) {
-				 throw new Exception("El usuario no puede ser eliminado se encuentra utilizado en la entidad Pago Condominio");	
-			}else {
-				boolean existeUsuarioenGato=existeUsuarioenGasto(idUsuario);
+		} else {
+			Usuario user = new Usuario();
+			user = findUsuarioById(idUsuario);
+			boolean existeUserenPago = existeUsuarioenPagoCondominio(idUsuario);
+			if (existeUserenPago) {
+				throw new Exception(
+						"El usuario no puede ser eliminado se encuentra utilizado en la entidad Pago Condominio");
+			} else {
+				boolean existeUsuarioenGato = existeUsuarioenGasto(idUsuario);
 				if (existeUsuarioenGato) {
-					 throw new Exception("El usuario no puede ser eliminado se encuentra utilizado en la entidad Gasto");	
-						}else
-				em.remove(user);
+					throw new Exception("El usuario no puede ser eliminado se encuentra utilizado en la entidad Gasto");
+				} else
+					em.remove(user);
 			}
-				
+
 		}
 	}
-	
-	 @SuppressWarnings("unchecked")
-		public boolean existeUsuarioenGasto(long idUsuario) {
-	      	Query q = em.createQuery("SELECT g FROM Gasto g "
-	    			+ "where g.usuario.idusuario=?1", Gasto.class);
-	      	q.setParameter(1, idUsuario);
-	      	List<Gasto>listaGastos=new ArrayList<Gasto>();
-			listaGastos= q.getResultList(); 
-			if (listaGastos.isEmpty()) {
-				return false;
-			}else
+
+	@SuppressWarnings("unchecked")
+	public boolean existeUsuarioenGasto(long idUsuario) {
+		Query q = em.createQuery("SELECT g FROM Gasto g " + "where g.usuario.idusuario=?1", Gasto.class);
+		q.setParameter(1, idUsuario);
+		List<Gasto> listaGastos = new ArrayList<Gasto>();
+		listaGastos = q.getResultList();
+		if (listaGastos.isEmpty()) {
+			return false;
+		} else
 			return true;
-	    }
-	 @SuppressWarnings("unchecked")
-		public boolean existeUsuarioenPagoCondominio(long idUsuario) {
-	      	Query q = em.createQuery("SELECT p FROM PagoCondomino p "
-	    			+ "where p.usuario.idusuario=?1", PagoCondomino.class);
-	      	q.setParameter(1, idUsuario);
-	      	List<PagoCondomino>listaPagos=new ArrayList<PagoCondomino>();
-			listaPagos= q.getResultList(); 
-			if (listaPagos.isEmpty()) {
-				return false;
-			}else
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean existeUsuarioenPagoCondominio(long idUsuario) {
+		Query q = em.createQuery("SELECT p FROM PagoCondominio p " + "where p.usuario.idusuario=?1",
+				PagoCondominio.class);
+		q.setParameter(1, idUsuario);
+		List<PagoCondominio> listaPagos = new ArrayList<PagoCondominio>();
+		listaPagos = q.getResultList();
+		if (listaPagos.isEmpty()) {
+			return false;
+		} else
 			return true;
-	    }
-    @SuppressWarnings("unchecked")
+	}
+
+	@SuppressWarnings("unchecked")
 	public boolean existeRolenUsuario(long idRol) {
-      	Query q = em.createQuery("SELECT u FROM Usuario u "
-    			+ "where u.rol.idrol=?1", Usuario.class);
-      	q.setParameter(1, idRol);
-      	List<Usuario>listaUsuarios=new ArrayList<Usuario>();
-		listaUsuarios= q.getResultList(); 
+		Query q = em.createQuery("SELECT u FROM Usuario u " + "where u.rol.idrol=?1", Usuario.class);
+		q.setParameter(1, idRol);
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		listaUsuarios = q.getResultList();
 		if (listaUsuarios.isEmpty()) {
 			return false;
-		}else
-		return true;
-    }
-    
+		} else
+			return true;
+	}
+
 }

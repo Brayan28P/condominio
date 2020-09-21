@@ -6,7 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import condominio.core.model.entities.PagoCondomino;
+import condominio.core.model.entities.PagoCondominio;
 import condominio.core.model.entities.TipoPago;
 import condominio.core.model.entities.Usuario;
 import condominio.modulos.login.view.controller.BeanLogin;
@@ -26,12 +26,14 @@ import java.util.List;
 public class BeanPagosTesorero implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<PagoCondomino> listaPagoCondominos;
-	private PagoCondomino pagoCondomino = new PagoCondomino();
-	private PagoCondomino editarPagoCondominio = new PagoCondomino();
+	private List<PagoCondominio> listaPagoCondominos;
+	private PagoCondominio pagoCondominio = new PagoCondominio();
+	private PagoCondominio editarPagoCondominio = new PagoCondominio();
 	private long idtPagofk;
 	private long idtPagofkE;
 	private long idCondominiofk;
+	private long idCondominiofkE;
+	private boolean validoE;
 	@EJB
 	ManagerPagoTesorero managerPagoTesorero;
 	@EJB
@@ -52,9 +54,11 @@ public class BeanPagosTesorero implements Serializable {
 
 	}
 
-	public void actionListenerCargarPagoCondomino(PagoCondomino g) {
+	public void actionListenerCargarPagoCondomino(PagoCondominio g) {
 		editarPagoCondominio = g;
 		idtPagofkE=g.getTipoPago().getIdpago();
+		validoE=g.getValido();
+		idCondominiofkE=g.getUsuario().getIdusuario();
 	}
 
 	public void actionListenerIngresarPagoCondomino() {
@@ -63,13 +67,13 @@ public class BeanPagosTesorero implements Serializable {
 			System.out.print(tipoPago.getNombre());
 			Date fechatransaccion = new Date();
 			Usuario usuario = managerUsuario.findUsuarioById(idCondominiofk);
-			pagoCondomino.setTipoPago(tipoPago);
-			pagoCondomino.setFechatransaccion(fechatransaccion);
-			pagoCondomino.setUsuario(usuario);
-			pagoCondomino.setValido(true);
-			managerPagoTesorero.ingresarPagoCondomino(pagoCondomino);
+			pagoCondominio.setTipoPago(tipoPago);
+			pagoCondominio.setFechatransaccion(fechatransaccion);
+			pagoCondominio.setUsuario(usuario);
+			pagoCondominio.setValido(true);
+			managerPagoTesorero.ingresarPagoCondomino(pagoCondominio);
 			listaPagoCondominos = managerPagoTesorero.findAllPagoCondominos();
-			pagoCondomino = new PagoCondomino();
+			pagoCondominio = new PagoCondominio();
 			JSFUtil.crearMensajeInfo("Pago condomino creado correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,10 +86,11 @@ public class BeanPagosTesorero implements Serializable {
 		try {
 			TipoPago tipoPagoCondomino = managerTesorero.findTipoPagoById(idtPagofkE);
 			Date fechatransaccion = new Date();
-			Usuario usuario = managerUsuario.findUsuarioById(beanLogin.getLogin().getIdUsuario());
+			Usuario usuario = managerUsuario.findUsuarioById(idCondominiofkE);
 			editarPagoCondominio.setTipoPago(tipoPagoCondomino);
 			editarPagoCondominio.setFechatransaccion(fechatransaccion);
 			editarPagoCondominio.setUsuario(usuario);
+			editarPagoCondominio.setValido(validoE);
 			managerPagoTesorero.editarPagoCondomino(editarPagoCondominio);
 			listaPagoCondominos = managerPagoTesorero.findAllPagoCondominos();
 			JSFUtil.crearMensajeInfo("Pago condomino editado correctamente.!");
@@ -100,33 +105,33 @@ public class BeanPagosTesorero implements Serializable {
 		try {
 			managerPagoTesorero.eliminarPagoCondomino(idPagoCondomino);
 			listaPagoCondominos = managerPagoTesorero.findAllPagoCondominos();
-			JSFUtil.crearMensajeInfo("PagoCondomino eliminado correctamente");
+			JSFUtil.crearMensajeInfo("PagoCondominio eliminado correctamente");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeError(e.getMessage());
 		}
 	}
 
-	public List<PagoCondomino> getListaPagoCondominos() {
+	public List<PagoCondominio> getListaPagoCondominos() {
 		return listaPagoCondominos;
 	}
 
-	public void setListaPagoCondominos(List<PagoCondomino> listaPagoCondominos) {
+	public void setListaPagoCondominos(List<PagoCondominio> listaPagoCondominos) {
 		this.listaPagoCondominos = listaPagoCondominos;
 	}
 
-	public PagoCondomino getPagoCondomino() {
-		return pagoCondomino;
+	public PagoCondominio getPagoCondomino() {
+		return pagoCondominio;
 	}
 
-	public void setPagoCondomino(PagoCondomino pagoCondomino) {
-		this.pagoCondomino = pagoCondomino;
+	public void setPagoCondomino(PagoCondominio pagoCondominio) {
+		this.pagoCondominio = pagoCondominio;
 	}
 
-	public PagoCondomino geteditarPagoCondominio() {
+	public PagoCondominio geteditarPagoCondominio() {
 		return editarPagoCondominio;
 	}
 
-	public void seteditarPagoCondominio(PagoCondomino editarPagoCondominio) {
+	public void seteditarPagoCondominio(PagoCondominio editarPagoCondominio) {
 		this.editarPagoCondominio = editarPagoCondominio;
 	}
 
@@ -152,6 +157,22 @@ public class BeanPagosTesorero implements Serializable {
 
 	public void setIdCondominiofk(long idCondominiofk) {
 		this.idCondominiofk = idCondominiofk;
+	}
+
+	public long getIdCondominiofkE() {
+		return idCondominiofkE;
+	}
+
+	public void setIdCondominiofkE(long idCondominiofkE) {
+		this.idCondominiofkE = idCondominiofkE;
+	}
+
+	public boolean isValidoE() {
+		return validoE;
+	}
+
+	public void setValidoE(boolean validoE) {
+		this.validoE = validoE;
 	}
 
 	

@@ -21,14 +21,13 @@
 			<h:form>
 				<nav class="navbar navbar-expand-lg navbar-dark fixed-top navBorder"
 					style="background-color: #E4E5E5; margin-top:66px; z-index:1000">
-
 				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">
 					<p:menuitem title="Bienvenido " icon="fa fa-user"
-						style="font-size: 16px;" value="Bienvenido" />					
+						style="font-size: 16px;" value="Bienvenido" />
 					<p:menuitem title="Gastos" icon="fa fa-dollar"
 						action="#{beanUsuario.actionRedireccionarGastos()}"
 						style="font-size: 16px;" value="Gastos" />
-						<p:menuitem title="Pagos condominios" icon="fa fa-bar-chart"
+					<p:menuitem title="Pagos condominios" icon="fa fa-bar-chart"
 						action="#{beanUsuario.actionRedireccionarPagosTesorero()}"
 						style="font-size: 16px;" value="Pagos condominios" />
 					<p:menuitem title="Tipo Gastos" icon="fa fa-tint"
@@ -37,27 +36,33 @@
 					<p:menuitem title="Tipo Pagos" icon="fa fa-building-o"
 						action="#{beanUsuario.actionRedireccionarTipoPagos()}"
 						style="font-size: 16px;" value="Tipo Pagos" />
-						<p:menuitem title="Usuarios "
+					<p:menuitem title="Usuarios "
 						action="#{beanUsuario.actionRedireccionarUsuarios()}"
 						icon="fa fa-users" style="font-size: 16px;" value="Usuarios" />
 					<p:menuitem title="Roles " icon="fa fa-globe"
 						action="#{beanUsuario.actionRedireccionarRoles()}"
-						style="font-size: 16px;" value="Roles" />					
+						style="font-size: 16px;" value="Roles" />
 				</p:menubar> </nav>
 			</h:form>
 		</div>
-
+		<h:form>
+			<p:panel id="basic" header="Saldos" >
+				<h:panelGrid columns="2" layout="grid" style="display:block;">
+						<p:chart type="pie" model="#{beanTesorero.pieModel}"
+							style="width:600px;height:400px;" />
+							<h:panelGrid>
+							<h:outputLabel style="font-size: 20px; color:#03DFDA" value="Ingresos: $#{beanTesorero.ingresos}" />
+							<h:outputLabel style="font-size: 20px; color:#C91313" value="Gastos: $#{beanTesorero.gastos}" />
+							<h:outputLabel style="font-size: 40px; font-weight:bold" value="Saldo: $#{beanTesorero.total}" />
+							</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
 		<div id="migajas" class="container-fluid col-lg-12"
 			style="margin-top: 105px;">
 			<nav class="navbar navbar-expand-lg fixed-top labelBorder"
-				style="margin-top:105px; z-index:100">
-			<ol class="breadcrumb w-100" style="background-color: white">
-				<li class="breadcrumb-item active" style="font-size: 14px;">Menú</li>
-			</ol>
-			</nav>
+				style="margin-top:105px; z-index:100"> </nav>
 		</div>
-
-
 		<div id="mensajes" class="container-fluid col-lg-12"
 			style="margin-top: 150px;">
 			<p:messages>
@@ -67,12 +72,8 @@
 				<p:autoUpdate />
 			</p:growl>
 		</div>
-
-
-
-
 	</ui:define>
-
 </ui:composition>
+
 
 </html>

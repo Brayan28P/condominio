@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import condominio.core.model.entities.PagoCondomino;
+import condominio.core.model.entities.PagoCondominio;
 
 /**
  * Session Bean implementation class ManagerTesorero
@@ -29,44 +29,44 @@ public class ManagerPagoTesorero {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PagoCondomino> findAllPagoCondominos() {
-		Query q = em.createQuery("SELECT r FROM PagoCondomino r order by r.idpagoc asc", PagoCondomino.class);
-		List<PagoCondomino> lista = q.getResultList();
+	public List<PagoCondominio> findAllPagoCondominos() {
+		Query q = em.createQuery("SELECT r FROM PagoCondominio r order by r.valido asc", PagoCondominio.class);
+		List<PagoCondominio> lista = q.getResultList();
 		return lista;
 	}
 
 	/**
-	 * Crear nuevo PagoCondomino
+	 * Crear nuevo PagoCondominio
 	 * 
-	 * @param PagoCondomino
+	 * @param PagoCondominio
 	 * @throws Exception
 	 */
-	public void ingresarPagoCondomino(PagoCondomino PagoCondomino) throws Exception {
-		if (PagoCondomino != null) {
-			em.persist(PagoCondomino);
+	public void ingresarPagoCondomino(PagoCondominio PagoCondominio) throws Exception {
+		if (PagoCondominio != null) {
+			em.persist(PagoCondominio);
 		} else {
 			throw new Exception("El objeto pago condominio no ha sido cargado correctamente.!");
 		}
 	}
 
 	/**
-	 * Encontrar PagoCondomino por ID
+	 * Encontrar PagoCondominio por ID
 	 * 
 	 * @param idPagoCondomino
 	 * @return
 	 */
-	public PagoCondomino findPagoCondominoById(long idPagoCondomino) {
-		PagoCondomino PagoCondomino = em.find(PagoCondomino.class, idPagoCondomino);
-		return PagoCondomino;
+	public PagoCondominio findPagoCondominoById(long idPagoCondomino) {
+		PagoCondominio PagoCondominio = em.find(PagoCondominio.class, idPagoCondomino);
+		return PagoCondominio;
 	}
 
 	/**
-	 * Editar PagoCondomino
+	 * Editar PagoCondominio
 	 * 
 	 * @param g
 	 * @throws Exception
 	 */
-	public void editarPagoCondomino(PagoCondomino g) throws Exception {
+	public void editarPagoCondomino(PagoCondominio g) throws Exception {
 		if (g == null) {
 			throw new Exception("El objeto pago condomino no ha sido cargado correctamente.!");
 		} else {
@@ -75,7 +75,7 @@ public class ManagerPagoTesorero {
 	}
 
 	/**
-	 * Eliminar PagoCondomino
+	 * Eliminar PagoCondominio
 	 * 
 	 * @param idPagoCondomino
 	 * @throws Exception
@@ -84,10 +84,10 @@ public class ManagerPagoTesorero {
 		if (idPagoCondomino == 0) {
 			throw new Exception("El tipo pago condomino no existe vuelva a intentarlo");
 		} else {
-			PagoCondomino g = new PagoCondomino();
+			PagoCondominio g = new PagoCondominio();
 			g = findPagoCondominoById(idPagoCondomino);
 			if (g == null) {
-				throw new Exception("No se ha encontrado PagoCondomino");
+				throw new Exception("No se ha encontrado pago condominio");
 			} else {
 				em.remove(g);
 			}

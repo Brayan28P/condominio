@@ -3,7 +3,6 @@
 	<persistence-unit name="condominioDS" transaction-type="JTA">
 	<jta-data-source>java:/condominioDS</jta-data-source>
 		<class>condominio.core.model.entities.Gasto</class>
-		<class>condominio.core.model.entities.PagoCondomino</class>
 		<class>condominio.core.model.entities.Rol</class>
 		<class>condominio.core.model.entities.TipoGasto</class>
 		<class>condominio.core.model.entities.TipoPago</class>

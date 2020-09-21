@@ -6,7 +6,9 @@ public class LoginDto {
 	private String nombres;
 	private String nombreRol;
 	private String cedula;
+	private String seguridadCedula;
 	private boolean activo;
+	private boolean inseguro;
 	public long getIdUsuario() {
 		return idUsuario;
 	}
@@ -36,6 +38,18 @@ public class LoginDto {
 	}
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
+	}
+	public boolean isInseguro() {
+		return inseguro;
+	}
+	public void setInseguro(boolean inseguro) {
+		this.inseguro = inseguro;
+	}
+	public String getSeguridadCedula() {
+		return seguridadCedula;
+	}
+	public void setSeguridadCedula(String seguridadCedula) {
+		this.seguridadCedula = seguridadCedula;
 	}
 	
 }

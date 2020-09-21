@@ -59,8 +59,9 @@
 
 			<h:form id="form2">
 				<div class="ui-fluid">
-					<p:dataTable var="g" value="#{beanPagosTesorero.listaPagoCondominos}"
-						reflow="true" style="margin-top:20px">
+					<p:dataTable var="g"
+						value="#{beanPagosTesorero.listaPagoCondominos}" reflow="true"
+						style="margin-top:20px">
 						<f:facet name="header">
               LISTA DE PAGOS CONDOMINIOS
             </f:facet>
@@ -81,7 +82,9 @@
 							<h:outputText value="#{g.fechatransaccion}" />
 						</p:column>
 						<p:column headerText="Verificado">
-							<h:outputText value="#{g.valido}" />
+							<h:outputText value="Verificado" rendered="#{g.valido == true}" />
+							<h:outputText value="No verificado"
+								rendered="#{g.valido == false}" />
 						</p:column>
 						<p:column headerText="OPCIONES">
 							<p:commandButton icon="fa fa-pencil"
@@ -118,15 +121,16 @@
 								<f:selectItems value="#{beanTipoPago.listaTipoPagos}" var="t"
 									itemLabel="#{t.nombre}" itemValue="#{t.idpago}" />
 							</p:selectOneMenu>
-							<p:outputLabel value="Seleccione tipo condominio: " />
-							<p:selectOneMenu id="onecondominio" autoWidth="100%" required="true"
-								requiredMessage="Elija un tipo condominio"
-								value="#{beanPagosTesorero.idCondominiofk}" effect="fade" var="ro"
-								filter="true" filterMatchMode="contains">
+							<p:outputLabel value="Seleccione condominio: " />
+							<p:selectOneMenu id="onecondominio" autoWidth="100%"
+								required="true" requiredMessage="Elija un condominio"
+								value="#{beanPagosTesorero.idCondominiofk}" effect="fade"
+								var="ro" filter="true" filterMatchMode="contains">
 								<f:selectItem itemLabel="Seleccione uno"
 									noSelectionOption="true" />
 								<f:selectItems value="#{beanCondominio.listaCondominio}" var="t"
-									itemLabel="#{t.nombres} #{t.apellidos}" itemValue="#{t.idusuario}" />
+									itemLabel="#{t.nombres} #{t.apellidos}"
+									itemValue="#{t.idusuario}" />
 							</p:selectOneMenu>
 							<p:outputLabel value="Valor" />
 							<p:inputText value="#{beanPagosTesorero.pagoCondomino.valor}"
@@ -155,26 +159,47 @@
 				<div class="ui-fluid">
 					<p:panelGrid columns="1" layout="grid">
 						<p:outputLabel value="Valor" />
-						<p:inputText value="#{beanPagosTesorero.editarPagoCondominio.idpagoc}"
+						<p:inputText
+							value="#{beanPagosTesorero.editarPagoCondominio.idpagoc}"
 							required="true" disabled="true" requiredMessage="Ingrese valor"
 							maxlength="100">
 						</p:inputText>
-						<p:outputLabel value="Seleccione tipo gasto: " />
-						<p:selectOneMenu id="onegasto" autoWidth="100%" required="true"
-							requiredMessage="Elija un tipo gasto"
-							value="#{beanPagosTesorero.idtPagofk}" effect="fade" var="ro"
+						<p:outputLabel value="Selecione estado: " />
+						<p:selectOneMenu id="onecondominio" autoWidth="100%"
+							required="true" requiredMessage="Elija un estado"
+							value="#{beanPagosTesorero.validoE}" effect="fade" var="ro"
 							filter="true" filterMatchMode="contains">
 							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
-							<f:selectItems value="#{beanTipoGasto.listaTipoGastos}" var="t"
-								itemLabel="#{t.nombre}" itemValue="#{t.idgasto}" />
+							<f:selectItem itemLabel="Verificado" itemValue="true" />
+							<f:selectItem itemLabel="No verfificado" itemValue="false" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Seleccione tipo pago: " />
+						<p:selectOneMenu id="onegastoE" autoWidth="100%" required="true"
+							requiredMessage="Elija un tipo gasto"
+							value="#{beanPagosTesorero.idtPagofkE}" effect="fade" var="ro"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
+							<f:selectItems value="#{beanTipoPago.listaTipoPagos}" var="t"
+								itemLabel="#{t.nombre}" itemValue="#{t.idpago}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Seleccione condominio: " />
+						<p:selectOneMenu id="onecondominioE" autoWidth="100%"
+							required="true" requiredMessage="Elija un condominio"
+							value="#{beanPagosTesorero.idCondominiofkE}" effect="fade"
+							var="ro" filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="Seleccione uno" noSelectionOption="true" />
+							<f:selectItems value="#{beanCondominio.listaCondominio}" var="t"
+								itemLabel="#{t.nombres} #{t.apellidos}"
+								itemValue="#{t.idusuario}" />
 						</p:selectOneMenu>
 						<p:outputLabel value="Valor" />
-						<p:inputText value="#{beanPagosTesorero.editarPagoCondominio.valor}"
+						<p:inputText
+							value="#{beanPagosTesorero.editarPagoCondominio.valor}"
 							required="true" requiredMessage="Ingrese valor" maxlength="100">
 						</p:inputText>
 					</p:panelGrid>
 					<p:panelGrid columns="2" layout="grid">
-						<p:commandButton value="INGRESAR" icon="fa fa-arrow-circle-right"
+						<p:commandButton value="EDITAR" icon="fa fa-arrow-circle-right"
 							style="width:100%"
 							actionListener="#{beanPagosTesorero.actionListenerEditarPagoCondominio()}"
 							oncomplete="nuevoRol" update="@form" ajax="false">

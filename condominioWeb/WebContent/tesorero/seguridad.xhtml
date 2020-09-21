@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+<f:event listener="#{beanLogin.actionComprobarSessionLogin()}" type="preRenderView"></f:event>
+</f:metadata>
+<ui:composition template="/WEB-INF/template/template_general.xhtml">
+
+	<ui:define name="head">
+		<link rel="icon" type="image/png"
+			href="../resources/images/logoTitle.png" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<div id="menu" style="margin-top: 66px;">
+			<h:form>
+				<nav class="navbar navbar-expand-lg navbar-dark fixed-top navBorder"
+					style="background-color: #E4E5E5; margin-top:66px; z-index:1000">
+
+				<p:menubar style="background-color:#E4E5E5 ; border: #CAE1E8;">
+					<p:menuitem title="Bienvenido " icon="fa fa-key"
+						style="font-size: 16px;" value="Cambio de Contraseña" />
+					 
+				</p:menubar> </nav>
+			</h:form>
+		</div>
+
+		<div id="migajas" class="container-fluid col-lg-12"
+			style="margin-top: 105px;">
+			<nav class="navbar navbar-expand-lg fixed-top labelBorder"
+				style="margin-top:105px; z-index:100">
+			<ol class="breadcrumb w-100" style="background-color: white">
+				<li class="breadcrumb-item active" style="font-size: 14px;">Seguridad</li>
+			</ol>
+			</nav>
+		</div>
+
+
+		<div id="mensajes" class="container-fluid col-lg-12"
+			style="margin-top: 150px;">
+			<p:messages>
+				<p:autoUpdate />
+			</p:messages>
+			<p:growl>
+				<p:autoUpdate />
+			</p:growl>
+		</div>
+		<div class="ui-fluid" align="center">
+<h:form id="loginForm" rendered="#{beanLogin.inseguro}">
+		<p:growl id="msg" showDetail="true" life="4000" />
+		<p:panel id="loginPnl" header="Cambio de contraseña" 
+			style="width: 350px; margin: 0 auto;">
+			<h:panelGrid id="loginPanel" columns="1" cellpadding="5">
+				<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel for="ci" value="Contraseña Actual:" />
+					
+						<p:inputText id="ci" accesskey="true" 
+						 required="true" value="#{beanLogin.contraseniaActual}"
+							requiredMessage="Ingrese la contraseña actual" maxlength="10"
+							validatorMessage="Ingrese la contraseña actual"> 
+						</p:inputText> 
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel  value="Nueva contraseña :" />
+				
+						<p:password   value="#{beanLogin.nuevaContrasenia}"
+						  feedback="true" label="Contraseña 1"  
+							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula, mayúscula y un número"
+							required="true" requiredMessage="Ingrese una contraseña segura"
+							maxlength="20" promptLabel="Ingrese una contraseña segura!"
+							weakLabel="Bajo" goodLabel="Media" strongLabel="Alta">
+							<f:validateRegex
+								pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}"></f:validateRegex>
+						</p:password> 
+					</p:column>
+				</p:row>
+					<p:row>
+					<p:column style="font-weight: bold;">
+						<p:outputLabel   value="Confirmar contraseña:" />
+				
+					<p:password   value="#{beanLogin.confirmarContrasenia}"
+						  feedback="true" label="Contraseña 1"   
+							validatorMessage="Ingrese una contraseña de 8 a 16 dígitos al almenos contenga una miníscula, mayúscula y un número"
+							required="true" requiredMessage="Ingrese una contraseña segura"
+							maxlength="20" promptLabel="Ingrese una contraseña segura!"
+							weakLabel="Bajo" goodLabel="Media" strongLabel="Alta">
+							<f:validateRegex
+								pattern="(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}"></f:validateRegex>
+						</p:password> 
+					</p:column>
+				</p:row>
+			</h:panelGrid>
+			<h:panelGrid columns="1" cellpadding="10" width="100%">
+				<p:commandButton id="loginButton"  action="#{beanLogin.actionRestablecerContrasenia()}"
+					value="Restablecer" update="loginForm" ajax="true" style="float: right;">
+				</p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+		<p:blockUI block="loginPnl" trigger="loginButton" style="float:right;">
+			<p:graphicImage value="resources/images/loader.gif" />
+		</p:blockUI>
+	</h:form>
+</div>
+  
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
