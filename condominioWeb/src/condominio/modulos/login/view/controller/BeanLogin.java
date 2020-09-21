@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import condominio.core.model.entities.Usuario;
-import condominio.core.model.util.ModelUtil;
 import condominio.modulos.login.model.LoginDto;
 import condominio.modulos.login.model.ManagerLogin;
 import condominio.modulos.usuario.model.ManagerUsuario;
@@ -29,9 +28,6 @@ public class BeanLogin implements Serializable {
 	private String verificarContrasenia;
 	private boolean activoLogin;
 	private boolean isInseguro;
-	private String contraseniaActual;
-	private String nuevaContrasenia;
-	private String confirmarContrasenia;	
 	@EJB
 	ManagerLogin managerLogin;
 	@EJB
@@ -40,25 +36,7 @@ public class BeanLogin implements Serializable {
 	public BeanLogin() {
 
 	}
-	
-@SuppressWarnings("unused")
-public  String actionRestablecerContrasenia() {
-	try {
-		managerLogin.restablecerContraseniaSegura(login, contraseniaActual,Seguridad.encriptar(nuevaContrasenia),Seguridad.encriptar(confirmarContrasenia));
-		contraseniaActual="";
-		nuevaContrasenia="";
-		confirmarContrasenia="";
-		isInseguro=false;
-		
-		JSFUtil.crearMensajeInfo("Contraseña actualizada correctamente");
-		return "/tesorero/menu?faces-redirect=true";
-	} catch (Exception e) {
-JSFUtil.crearMensajeError(e.getMessage());
-	}finally {
-		JSFUtil.crearMensajeFastFinal();
-	}
-	return "";
-}
+
 	public String actionCerrarSesion() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "/login?faces-redirect=true";
@@ -238,30 +216,6 @@ JSFUtil.crearMensajeError(e.getMessage());
 
 	public void setInseguro(boolean isInseguro) {
 		this.isInseguro = isInseguro;
-	}
-
-	public String getContraseniaActual() {
-		return contraseniaActual;
-	}
-
-	public void setContraseniaActual(String contraseniaActual) {
-		this.contraseniaActual = contraseniaActual;
-	}
-
-	public String getNuevaContrasenia() {
-		return nuevaContrasenia;
-	}
-
-	public void setNuevaContrasenia(String nuevaContrasenia) {
-		this.nuevaContrasenia = nuevaContrasenia;
-	}
-
-	public String getConfirmarContrasenia() {
-		return confirmarContrasenia;
-	}
-
-	public void setConfirmarContrasenia(String confirmarContrasenia) {
-		this.confirmarContrasenia = confirmarContrasenia;
 	}
 	
 
