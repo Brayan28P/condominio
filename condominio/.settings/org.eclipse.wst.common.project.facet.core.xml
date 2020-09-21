@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
+<<<<<<< HEAD
+  <runtime name="WildFly 19.0 Runtime"/>
+=======
+>>>>>>> a5b156b9d4ad2dc07ae467e5cecbf3190030e1fb
   <fixed facet="jst.ear"/>
   <installed facet="jst.ear" version="7.0"/>
 </faceted-project>
