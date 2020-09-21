@@ -125,7 +125,7 @@ public class ManagerUsuario {
 				boolean existeCedula,existeCorreo;
 				existeCedula=findUsuarioByCedula(u.getCedula());
 				existeCorreo=findUsuarioByCorreo(u.getEmail());
-				if (ModelUtil.validarCedula(usuario.getCedula())) {
+				if (!ModelUtil.validarCedula(u.getCedula())) {
 					throw new Exception("La cédula es incorrecta");
 				}
 				if (existeCedula) {
